@@ -1,6 +1,6 @@
 ---
 
-# Repositorio del Taller Flex
+# Taller Flex - Twisted Metal
 
 Este repositorio contiene la solución al taller de Flex, junto con el proyecto del scaner del juego Twisted Metal. Twisted Metal es un derby de demolición que permite el uso de proyectiles baláısticos, ametralladoras, minas y otros tipos de armas (hasta un arma satelital y armas nucleares). En su modo de torneo se pueden tener batallas multijugador en diferentes escenarios, en los cuales se encuentras gran variedad de pick ups de armas y mejoras. El objetivo del juego es ser el último automóvil en pie.
 
@@ -16,8 +16,9 @@ Escáner que reemplaza todos los números en un flujo de texto con un signo de i
     gcc lex.yy.c -o hide-digits -lfl
     ./hide-digits 
 #### Ejemplo 2
-Este ejemplo ilustra un programa que cuenta las palabras, caracteres y líneas de un archivo seleccionado durante la ejecución del archivo compilado.
+Este ejemplo ilustra un programa que cuenta las palabras, caracteres y líneas de un archivo seleccionado durante la ejecución del archivo compilado. 
 1. **Comandos para compilar y correr programa**:
+   Es importante cambiar `example.txt` por el nombre del archivo con el cual se correra el programa.
     ```bash
     flex word-counter.l
     cc lex.yy.c -lfl -o word-counter
