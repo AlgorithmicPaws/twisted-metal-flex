@@ -18,10 +18,10 @@ Escáner que reemplaza todos los números en un flujo de texto con un signo de i
 #### Ejemplo 2
 Este ejemplo ilustra un programa que cuenta las palabras, caracteres y líneas de un archivo seleccionado durante la ejecución del archivo compilado.
 1. **Comandos para compilar y correr programa**:
-```bash
-flex word-counter.l
-cc lex.yy.c -lfl -o word-counter
-./word-counter < example.txt 
+    ```bash
+    flex word-counter.l
+    cc lex.yy.c -lfl -o word-counter
+    ./word-counter < example.txt 
 ### Parte 2
 Ya implementado en la calculadora.
 
