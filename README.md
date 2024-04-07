@@ -10,18 +10,18 @@ Este repositorio contiene la solución al taller de Flex, junto con el proyecto 
 ### Parte 1
 #### Ejemplo 1
 Escáner que reemplaza todos los números en un flujo de texto con un signo de interrogación. Podría ser útil, por ejemplo, si fueras un contador particularmente poco escrupuloso.
-**Comandos para compilar y correr programa**:
+1. **Comandos para compilar y correr programa**:
     ```bash
     flex hide-digits.l
     gcc lex.yy.c -o hide-digits -lfl
     ./hide-digits 
 #### Ejemplo 2
 Este ejemplo ilustra un programa que cuenta las palabras, caracteres y líneas de un archivo seleccionado durante la ejecución del archivo compilado.
-**Comandos para compilar y correr programa**:
-    ```bash
-    flex word-counter.l
-    cc lex.yy.c -lfl -o word-counter
-    ./word-counter < example.txt 
+1. **Comandos para compilar y correr programa**:
+```bash
+flex word-counter.l
+cc lex.yy.c -lfl -o word-counter
+./word-counter < example.txt 
 ### Parte 2
 Ya implementado en la calculadora.
 
