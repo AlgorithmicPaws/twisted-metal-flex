@@ -24,8 +24,10 @@ Este ejemplo ilustra un programa que cuenta las palabras, caracteres y líneas d
     cc lex.yy.c -lfl -o word-counter
     ./word-counter < example.txt 
 ### Parte 2
-Ya implementado en la calculadora.
-
+| Encabezado 1 | Encabezado 2 | Encabezado 3 |
+|:------------:|:------------:|:------------:|
+| Celda 1      | Celda 2      | Celda 3      |
+| Celda 4      | Celda 5      | Celda 6      |
 ### Punto 6
 ![Comparacion de tiempo de ejecucion](https://github.com/AlgorithmicPaws/flex-bison/blob/main/ComparationResults.png)
 ---
