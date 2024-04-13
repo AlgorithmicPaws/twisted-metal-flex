@@ -33,7 +33,7 @@ En el documento de juego, los jugadores deben seleccionar un mapa y cuatro perso
 
 Es importante seguir estas instrucciones correctamente, ya que no realizar la selección de mapa o de alguno de los cuatro jugadores resultará en un error y el no reconocimiento del documento de juego.
 
-#### Lista de Mapas
+#### Lista de Mapas y Personajes
 
 | Mapas       |
 |-------------|
@@ -45,8 +45,6 @@ Es importante seguir estas instrucciones correctamente, ya que no realizar la se
 | Holland     |
 | Hong Kong   |
 | Dark Tooth  |
-
-#### Lista de Personajes
 
 | Personajes | Descripción                                                                                                                                                         |
 |------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|
