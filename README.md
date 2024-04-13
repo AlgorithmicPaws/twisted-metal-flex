@@ -26,7 +26,8 @@ Este ejemplo ilustra un programa que cuenta las palabras, caracteres y líneas d
     ./word-counter < example.txt 
 ### Parte 2
 #### Descripción
-
+Analizador sintáctico para un combate de la arena de Twisted Metal. Un combate de la arena debe iniciar
+seleccionando el escenario, luego seleccionando 4 jugadores, entonces inicia el combate. En esta aproximación cada jugador hace un movimiento en su turno, además de que un ataque se hace a un solo oponente y será exitoso o no con base en la poscisión del objetivo.
 #### Selección de Mapa y Personajes
 
 En el documento de juego, los jugadores deben seleccionar un mapa y cuatro personajes para el combate. Esto se realiza mediante comandos específicos en el documento.
@@ -49,25 +50,25 @@ Es importante seguir estas instrucciones correctamente, ya que no realizar la se
 | Hong Kong   |
 | Dark Tooth  |
 ##### Lista de Personajes 
-| Personajes | Descripción                                                                                                                                                     |
-|------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Axel       | Es un hombre aprisionado en 2 ruedas gigantes por culpa de su padre. Se une al torneo para conseguir el valor de hacerle frente a su padre.                     |
-| Grasshopper| Krysta Sparks es la piloto de este buggy. Afirma ser la hija de Calypso y su deseo es asesinarlo.                                                               |
-| Mr. Grimm  | La parca pilotea esta motocicleta con sidecar. Se une al torneo porque desea facilitar su consumo de almas.                                                     |
-| Hammerhead | Los pilotos de esta Monster Truck son Mike y Stu, dos cabezahuecas que ingresan al torneo para desear poder volar.                                              |
-| Minion     | El demonio Minion conduce este vehículo APC guerrillero. Solo se une al torneo por el deseo de vengarse de Calypso por haberle robado sus poderes.              |
-| Outlaw 2   | Jamie Roberts maneja este coche de policía. Es la hermana del Outlaw de la primera entrega y busca a su hermano perdido.                                        |
-| Roadkill   | Piloteado por Marcus Kane, un vagabundo que cree que todo el universo de Twisted Metal es algo imaginario.                                                      |
-| Shadow     | Su piloto es Mortimer y conduce un coche fúnebre. Es el guardián de las almas perdidas que fueron asesinadas.                                                   |
-| Mr. Slam   | Un tractor de pala conducido por Simon Whittlebone, un arquitecto frustrado que desea construir el rascacielos más grande del mundo.                            |
-| Spectre    | Un Corvette blanco conducido por Ken Masters, un actor cuyo único deseo es la fama absoluta.                                                                    |
-| Sweettooth | El camión de helados de la anterior entrega vuelve conducido por Kane Needles, un payaso homicida.                                                              |
-| Thumper    | Una limusina rosa manejada por Bruce Cochrane, un gangster que desea ser el emperador del mundo.                                                                |
-| Twister    | Este F1 es conducido por Amanda Watts, una piloto de carreras cuyo deseo es viajar a la velocidad de la luz.                                                    |
-| Warthog    | El capitán Rogers maneja este blindado de guerra. Se une al torneo para desear ser joven otra vez.                                                              |
-| Darktooth  | Esta extraña mezcla de Sweettooth con Darkside es el jefe final del juego. No es seleccionable.                                                                 |
+| Personajes | Descripción                                                                                                                                         |  Vida    |
+|------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|----------|
+| Axel       | Es un hombre aprisionado en 2 ruedas gigantes por culpa de su padre. Se une al torneo para conseguir el valor de hacerle frente a su padre.         |   20     |
+| Grasshopper| Krysta Sparks es la piloto de este buggy. Afirma ser la hija de Calypso y su deseo es asesinarlo.                                                   |   20     |
+| Mr. Grimm  | La parca pilotea esta motocicleta con sidecar. Se une al torneo porque desea facilitar su consumo de almas.                                         |    20    |
+| Hammerhead | Los pilotos de esta Monster Truck son Mike y Stu, dos cabezahuecas que ingresan al torneo para desear poder volar.                                  |   20     |
+| Minion     | El demonio Minion conduce este vehículo APC guerrillero. Solo se une al torneo por el deseo de vengarse de Calypso por haberle robado sus poderes.  |  20      |
+| Outlaw 2   | Jamie Roberts maneja este coche de policía. Es la hermana del Outlaw de la primera entrega y busca a su hermano perdido.                            |     20   |
+| Roadkill   | Piloteado por Marcus Kane, un vagabundo que cree que todo el universo de Twisted Metal es algo imaginario.                                          | 20       |
+| Shadow     | Su piloto es Mortimer y conduce un coche fúnebre. Es el guardián de las almas perdidas que fueron asesinadas.                                       |   20  |
+| Mr. Slam   | Un tractor de pala conducido por Simon Whittlebone, un arquitecto frustrado que desea construir el rascacielos más grande del mundo.                     | 20   |
+| Spectre    | Un Corvette blanco conducido por Ken Masters, un actor cuyo único deseo es la fama absoluta.                                                              |20  |
+| Sweettooth | El camión de helados de la anterior entrega vuelve conducido por Kane Needles, un payaso homicida.                                                        |20  |
+| Thumper    | Una limusina rosa manejada por Bruce Cochrane, un gangster que desea ser el emperador del mundo.                                                         |20   |
+| Twister    | Este F1 es conducido por Amanda Watts, una piloto de carreras cuyo deseo es viajar a la velocidad de la luz.                                             |20      |
+| Warthog    | El capitán Rogers maneja este blindado de guerra. Se une al torneo para desear ser joven otra vez.                                                 | 20                                                             |
+| Darktooth  | Esta extraña mezcla de Sweettooth con Darkside es el jefe final del juego. No es seleccionable.                                                     |20            |
 #### Acciones y movimientos 
-##### Controles basicos
+##### Controles basicos (movimiento) 
 | Acción                | Comando           |
 |-----------------------|-------------------|
 | Acelerar              | ⇑                 |
@@ -77,9 +78,10 @@ Es importante seguir estas instrucciones correctamente, ya que no realizar la se
 | Turbo                 | △                 |
 | Frenar                | ⃝                 |
 | Acelerar              | □                 |
-| Cambiar arma seleccionada a la izquierda | L1 |
+
+| Cambiar arma secundaria 1 | L1 |
 | Disparar arma seleccionada | L2          |
-| Cambiar arma seleccionada a la derecha | R1 |
+| Cambiar arma secundaria 2 | R1 |
 | Ametralladora         | R2                 |
 ##### Ataques de un especiales 
 | Ataque Especial                                 | Comando                        | Daño  |
@@ -96,6 +98,15 @@ Es importante seguir estas instrucciones correctamente, ya que no realizar la se
 
 
 ##### Anatomia de un turno 
-
+En su turno, cada personaje puede relizar las siguientes acciones:
+|Acción|Comanado|
+|------|--------|
+|Desplazarse|mov(comandos de movimiento)|
+|Ataque|atq(comando ataque, arma, personaje objectivo)|
+|Ataque especial| atqs(comando ataque especial)|
+puede desplazarse y disparar la ametralladora, desplazarse y disparar arma seleccionada, o realizar un ataque avanzado.
+Adem´as se supondr´a que un ataque se hace a un solo oponente y ser´a exitoso con probabilidad de 1 si se encuentra entre
+[-15, 15] grados, con probabilidad de 0.5 si esta entre [-45, -15) y (15. 45] grados, es decir la mitad de las veces el ataque
+de un jugador impactar´a en otro en ese rango.
 
 ---
