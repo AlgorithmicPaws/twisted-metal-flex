@@ -24,10 +24,49 @@ Este ejemplo ilustra un programa que cuenta las palabras, caracteres y líneas d
     cc lex.yy.c -lfl -o word-counter
     ./word-counter < example.txt 
 ### Parte 2
-| Encabezado 1 | Encabezado 2 | Encabezado 3 |
-|:------------:|:------------:|:------------:|
-| Celda 1      | Celda 2      | Celda 3      |
-| Celda 4      | Celda 5      | Celda 6      |
+#### Selección de Mapa y Personajes
+
+En el documento de juego, los jugadores deben seleccionar un mapa y cuatro personajes para el combate. Esto se realiza mediante comandos específicos en el documento.
+
+- Para seleccionar un mapa, se utiliza el comando `select map <nombre del mapa>`.
+- Para seleccionar un personaje, se utiliza el comando `select player <nombre del personaje>`.
+
+Es importante seguir estas instrucciones correctamente, ya que no realizar la selección de mapa o de alguno de los cuatro jugadores resultará en un error y el no reconocimiento del documento de juego.
+
+#### Lista de Mapas
+
+| Mapas       |
+|-------------|
+| Moscow      |
+| Paris       |
+| Amazonía    |
+| New York    |
+| Antarctica  |
+| Holland     |
+| Hong Kong   |
+| Dark Tooth  |
+
+#### Lista de Personajes
+
+| Personajes | Descripción                                                                                                                                                         |
+|------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Axel       | Es un hombre aprisionado en 2 ruedas gigantes por culpa de su padre. Se une al torneo para conseguir el valor de hacerle frente a su padre.                         |
+| Grasshopper| Krysta Sparks es la piloto de este buggy. Afirma ser la hija de Calypso y su deseo es asesinarlo.                                                                    |
+| Mr. Grimm  | La parca pilotea esta motocicleta con sidecar. Se une al torneo porque desea facilitar su consumo de almas.                                                          |
+| Hammerhead | Los pilotos de esta Monster Truck son Mike y Stu, dos cabezahuecas que ingresan al torneo para desear poder volar.                                                     |
+| Minion     | El demonio Minion conduce este vehículo APC guerrillero. Solo se une al torneo por el deseo de vengarse de Calypso por haberle robado sus poderes.                     |
+| Outlaw 2   | Jamie Roberts maneja este coche de policía. Es la hermana del Outlaw de la primera entrega y busca a su hermano perdido.                                              |
+| Roadkill   | Piloteado por Marcus Kane, un vagabundo que cree que todo el universo de Twisted Metal es algo imaginario.                                                             |
+| Shadow     | Su piloto es Mortimer y conduce un coche fúnebre. Es el guardián de las almas perdidas que fueron asesinadas.                                                         |
+| Mr. Slam   | Un tractor de pala conducido por Simon Whittlebone, un arquitecto frustrado que desea construir el rascacielos más grande del mundo.                                   |
+| Spectre    | Un Corvette blanco conducido por Ken Masters, un actor cuyo único deseo es la fama absoluta.                                                                         |
+| Sweettooth | El camión de helados de la anterior entrega vuelve conducido por Kane Needles, un payaso homicida.                                                                   |
+| Thumper    | Una limusina rosa manejada por Bruce Cochrane, un gangster que desea ser el emperador del mundo.                                                                     |
+| Twister    | Este F1 es conducido por Amanda Watts, una piloto de carreras cuyo deseo es viajar a la velocidad de la luz.                                                         |
+| Warthog    | El capitán Rogers maneja este blindado de guerra. Se une al torneo para desear ser joven otra vez.                                                                    |
+| Darktooth  | Esta extraña mezcla de Sweettooth con Darkside es el jefe final del juego. No es seleccionable.                                                                       |
+
+
 ### Punto 6
 ![Comparacion de tiempo de ejecucion](https://github.com/AlgorithmicPaws/flex-bison/blob/main/ComparationResults.png)
 ---
