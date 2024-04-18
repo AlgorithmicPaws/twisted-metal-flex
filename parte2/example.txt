@@ -1,0 +1,6 @@
+map Paris
+
+player Axel
+player Mr. Grimm
+select player Shadow
+select player Thumper
