@@ -1,42 +1,37 @@
 %{
-    #include <stdio.h>
-    #include <string.h>
+#include <stdio.h>
+#include "lex.yy.c"
+#include "analizer.tab.c"
 %}
 
 %option noyywrap
 
 %%
 
-"Mapa:"    { printf("Mapa seleccionado: %s\n", yytext); }
-"Jugador:" { printf("Jugador seleccionado: %s\n", yytext); }
-
-Moscow|Paris|Amazonía|New\ York|Antarctica|Holland|Hong\ Kong|Dark\ Tooth { printf("Mapa: %s\n", yytext); }
-Axel|Grasshopper|Mr\.\ Grimm|Hammerhead|Minion|Outlaw\ 2|Roadkill|Shadow|Mr\.\ Slam|Spectre|Sweettooth|Thumper|Twister|Warthog { printf("Jugador: %s\n", yytext); }
-
-.|\n ;  /* Ignorar cualquier otro carácter */
+[ Ss ][ Ee ][ Ll ][ Ee ][ Cc ][ Tt ] { printf("Se reconoci la palabra 'select'\n"); return SELECT; }
+[ Mm ][ Aa ][ Pp ]                { printf("Se reconoci la palabra 'map'\n"); return MAP; }
+[ Pp ][ Ll ][ Aa ][ Yy ][ Ee ][ Rr ]  { printf("Se reconoci la palabra 'player'\n"); return PLAYER; }
+.           ; // Ignorar otros caracteres
 
 %%
 
 int main(int argc, char *argv[]) {
-    // Verificar que se proporcionó un archivo de entrada
     if (argc != 2) {
-        printf("Uso: %s <archivo_de_entrada>\n", argv[0]);
+        printf("Uso: %s archivo_de_texto.txt\n", argv[0]);
         return 1;
     }
 
-    // Abrir el archivo de entrada
     FILE *file = fopen(argv[1], "r");
-    if (file == NULL) {
-        perror("Error al abrir el archivo");
+    if (!file) {
+        printf("Error al abrir el archivo.\n");
         return 1;
     }
 
-    // Analizar el archivo línea por línea
-    yyin = file;
-    yylex();
+    yyin = file; // Redirige la entrada estándar al archivo
 
-    // Cerrar el archivo
+    yyparse();   // Llama al analizador sintáctico generado por Bison
+
     fclose(file);
-
     return 0;
 }
+

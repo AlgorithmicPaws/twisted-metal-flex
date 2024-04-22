@@ -1,6 +1,5 @@
-map Paris
-
-player Axel
-player Mr. Grimm
-select player Shadow
-select player Thumper
+SELECT Paris
+SELECT PLAYER Axel
+SELECT PLAYER Mr. Grimm
+SELECT PLAYER Darktooth
+SELECT PLAYER Thumper
