@@ -11,6 +11,7 @@ int yyerror(char* s);
 %token PLAYER
 %token PNAME
 %token FINISH_TURN
+%token FINISH_GAME
 %token TURN
 %token FORWARD
 %token RIGHT
@@ -25,7 +26,7 @@ int yyerror(char* s);
 %token MACHINE_GUN
 %%
 
-start : selections turn_structure
+start : selections turn_structures FINISH_GAME
       ;
 
 
@@ -36,9 +37,13 @@ selections : selection
 selection : SELECT MAP MAPNAME { printf("Mapa seleccionado\n"); }
           | SELECT PLAYER PNAME  { printf("Personaje seleccionado\n"); }
           ;
-          
-turn_structure : TURN PNAME movements FINISH_TURN { printf("Turno completado\n"); }
+turn_structures : /* Empty */
+                | turn_structure turn_structures
+                ;
+
+turn_structure : TURN PNAME movements PNAME movements PNAME movements PNAME movements FINISH_TURN { printf("Turno completado\n"); }
                ;
+
 
 movements : /* Empty */
           | movements movement

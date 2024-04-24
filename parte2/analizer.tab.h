@@ -60,18 +60,19 @@ extern int yydebug;
     PLAYER = 261,                  /* PLAYER  */
     PNAME = 262,                   /* PNAME  */
     FINISH_TURN = 263,             /* FINISH_TURN  */
-    TURN = 264,                    /* TURN  */
-    FORWARD = 265,                 /* FORWARD  */
-    RIGHT = 266,                   /* RIGHT  */
-    REVERSE = 267,                 /* REVERSE  */
-    LEFT = 268,                    /* LEFT  */
-    TURBO = 269,                   /* TURBO  */
-    BRAKE = 270,                   /* BRAKE  */
-    ACCELERATE = 271,              /* ACCELERATE  */
-    SECONDARY_WEAPON_1 = 272,      /* SECONDARY_WEAPON_1  */
-    FIRE_SELECTED_WEAPON = 273,    /* FIRE_SELECTED_WEAPON  */
-    SECONDARY_WEAPON_2 = 274,      /* SECONDARY_WEAPON_2  */
-    MACHINE_GUN = 275              /* MACHINE_GUN  */
+    FINISH_GAME = 264,             /* FINISH_GAME  */
+    TURN = 265,                    /* TURN  */
+    FORWARD = 266,                 /* FORWARD  */
+    RIGHT = 267,                   /* RIGHT  */
+    REVERSE = 268,                 /* REVERSE  */
+    LEFT = 269,                    /* LEFT  */
+    TURBO = 270,                   /* TURBO  */
+    BRAKE = 271,                   /* BRAKE  */
+    ACCELERATE = 272,              /* ACCELERATE  */
+    SECONDARY_WEAPON_1 = 273,      /* SECONDARY_WEAPON_1  */
+    FIRE_SELECTED_WEAPON = 274,    /* FIRE_SELECTED_WEAPON  */
+    SECONDARY_WEAPON_2 = 275,      /* SECONDARY_WEAPON_2  */
+    MACHINE_GUN = 276              /* MACHINE_GUN  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif

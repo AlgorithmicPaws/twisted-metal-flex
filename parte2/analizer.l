@@ -8,6 +8,7 @@
 [ Pp ][ Ll ][ Aa ][ Yy ][ Ee ][ Rr ]  {return PLAYER; }
 "Turno:"                              {return TURN; }
 "Termina."                            {return FINISH_TURN; }
+"Fin del juego."                      {return FINISH_GAME; }
 "Moscow"                              {return MAPNAME; }
 "Paris"                               {return MAPNAME; }
 "Amazonía"                            {return MAPNAME; }
@@ -41,6 +42,7 @@
 "L2"                                  { return FIRE_SELECTED_WEAPON; }
 "R1"                                  { return SECONDARY_WEAPON_2; }
 "R2"                                  { return MACHINE_GUN; }
+
 
 [ \t\n]+
 .           { printf("Caracter no reconocido: %s\n", yytext); }

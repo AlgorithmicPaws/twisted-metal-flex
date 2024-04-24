@@ -5,4 +5,14 @@ select PLAYER Twister
 select PLAYER Warthog
 Turno:
 Minion ⇑⇒⇑BX⇒⇑Y
+Minion ⇑⇒⇑BX⇒⇑Y
+Minion ⇑⇒⇑BX⇒⇑Y
+Minion ⇑⇒⇑BX⇒⇑Y
 Termina.
+Turno:
+Thumper ⇑⇒⇑BX⇒⇑Y
+Thumper ⇑⇒⇑BX⇒⇑Y
+Minion ⇑⇒⇑BX⇒⇑Y
+Minion ⇑⇒⇑BX⇒⇑Y
+Termina.
+Fin del juego.
