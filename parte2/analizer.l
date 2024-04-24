@@ -1,7 +1,7 @@
 %{
 #include "analizer.tab.h"
 %}
-
+%option noyywrap
 %%
 [ Ss ][ Ee ][ Ll ][ Ee ][ Cc ][ Tt ]  {return SELECT; }
 [ Mm ][ Aa ][ Pp ]                    {return MAP; }
@@ -42,6 +42,16 @@
 "L2"                                  { return FIRE_SELECTED_WEAPON; }
 "R1"                                  { return SECONDARY_WEAPON_2; }
 "R2"                                  { return MACHINE_GUN; }
+"L1L2R1R2⇒⇐⇑"                         { return FIREBALL_FREEZE_ATTACK; }
+"⇐⇐⇓⇓"                                { return BE_INVISIBLE; }
+"⇒⇐⇓⇓"                                { return CHARGED_UP_MINE; }
+"⇑⇓⇑"                                 { return FREEZE; }
+"⇒⇐⇑"                                 { return FREEZE_ATTACK; }
+"⇒⇒⇓⇓"                                { return ENERGY_SHIELD; }
+"⇒⇐⇓"                                 { return MINE; }
+"⇐⇒⇓L2"                               { return FIRE_REAR_WEAPONS; }
+"⇑⇐⇐"                                 { return JUMP; }
+
 
 
 [ \t\n]+

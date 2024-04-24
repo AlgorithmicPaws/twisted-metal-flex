@@ -72,7 +72,16 @@ extern int yydebug;
     SECONDARY_WEAPON_1 = 273,      /* SECONDARY_WEAPON_1  */
     FIRE_SELECTED_WEAPON = 274,    /* FIRE_SELECTED_WEAPON  */
     SECONDARY_WEAPON_2 = 275,      /* SECONDARY_WEAPON_2  */
-    MACHINE_GUN = 276              /* MACHINE_GUN  */
+    MACHINE_GUN = 276,             /* MACHINE_GUN  */
+    FIREBALL_FREEZE_ATTACK = 277,  /* FIREBALL_FREEZE_ATTACK  */
+    BE_INVISIBLE = 278,            /* BE_INVISIBLE  */
+    CHARGED_UP_MINE = 279,         /* CHARGED_UP_MINE  */
+    FREEZE = 280,                  /* FREEZE  */
+    FREEZE_ATTACK = 281,           /* FREEZE_ATTACK  */
+    ENERGY_SHIELD = 282,           /* ENERGY_SHIELD  */
+    MINE = 283,                    /* MINE  */
+    FIRE_REAR_WEAPONS = 284,       /* FIRE_REAR_WEAPONS  */
+    JUMP = 285                     /* JUMP  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
