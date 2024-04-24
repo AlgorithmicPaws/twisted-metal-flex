@@ -65,7 +65,11 @@ turn_structures : /* Empty */
 
 turn_structure : TURN PNAME movements shoot PNAME movements shoot PNAME movements shoot PNAME movements shoot FINISH_TURN { printf("Turno completado\n"); }
                 |TURN PNAME special_attack PNAME special_attack PNAME special_attack PNAME special_attack FINISH_TURN { printf("Turno completado\n"); }
-               ;
+                |TURN PNAME movements shoot PNAME movements shoot PNAME movements shoot PNAME special_attack FINISH_TURN { printf("Turno completado\n"); }
+                |TURN PNAME movements shoot PNAME movements shoot PNAME special_attack PNAME special_attack FINISH_TURN { printf("Turno completado\n");}
+                |TURN PNAME movements shoot PNAME special_attack PNAME special_attack PNAME special_attack FINISH_TURN { printf("Turno completado\n"); }
+                |TURN PNAME movements shoot PNAME special_attack PNAME movements shoot PNAME movements shoot FINISH_TURN { printf("Turno completado\n"); }
+                ;
 
 movements : /* Empty */
           | movements movement

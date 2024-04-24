@@ -11,8 +11,8 @@ Minion  ⇒⇐⇓⇓
 Termina.
 Turno:
 Thumper ⇑⇒⇑BX⇒⇑YR2
-Thumper ⇑⇒⇑BX⇒⇑YR2
-Minion ⇑⇒⇑BX⇒⇑YR2
-Minion ⇑⇒⇑BX⇒⇑YR2
+Minion L1L2R1R2⇒⇐⇑
+Minion L1L2R1R2⇒⇐⇑
+Minion L1L2R1R2⇒⇐⇑
 Termina.
 Fin del juego.

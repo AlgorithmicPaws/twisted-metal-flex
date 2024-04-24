@@ -475,16 +475,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  7
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   46
+#define YYLAST   65
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  31
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  10
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  28
+#define YYNRULES  32
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  54
+#define YYNSTATES  72
 
 /* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   285
@@ -537,8 +537,9 @@ static const yytype_int8 yytranslate[] =
 static const yytype_int8 yyrline[] =
 {
        0,    43,    43,    47,    48,    51,    52,    62,    63,    66,
-      67,    70,    71,    74,    75,    76,    77,    78,    79,    80,
-      82,    84,    85,    86,    87,    88,    89,    90,    91
+      67,    68,    69,    70,    71,    74,    75,    78,    79,    80,
+      81,    82,    83,    84,    86,    88,    89,    90,    91,    92,
+      93,    94,    95
 };
 #endif
 
@@ -572,7 +573,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
-#define YYPACT_NINF (-39)
+#define YYPACT_NINF (-41)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -586,12 +587,14 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -1,     1,    10,    -2,   -39,     6,    -3,   -39,    25,   -39,
-      24,     3,   -39,   -39,     0,   -39,   -39,   -39,   -39,   -39,
-     -39,   -39,   -39,   -39,   -39,     4,    27,   -39,   -39,   -39,
-     -39,   -39,   -39,   -39,   -39,   -39,    29,     0,   -39,    30,
-       4,     0,    31,    33,   -39,     0,     4,    34,    36,   -39,
-     -39,     4,    37,   -39
+      -1,    11,     3,    -2,   -41,    13,    12,   -41,    19,   -41,
+      36,    37,   -41,   -41,    14,   -41,   -41,   -41,   -41,   -41,
+     -41,   -41,   -41,   -41,   -41,    18,    39,   -41,   -41,   -41,
+     -41,   -41,   -41,   -41,   -41,   -41,    41,    14,    14,    42,
+      18,    43,    14,    44,    14,    45,    14,    18,    46,    14,
+      18,    47,    48,    14,    49,    51,    14,   -41,    52,   -41,
+      14,    53,    18,   -41,    18,    54,   -41,    55,    56,   -41,
+     -41,   -41
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -600,17 +603,19 @@ static const yytype_int8 yypact[] =
 static const yytype_int8 yydefact[] =
 {
        0,     0,     0,     7,     3,     0,     0,     1,     0,     4,
-       0,     7,     5,     6,    11,     2,     8,    21,    22,    23,
-      24,    25,    26,    27,    28,     0,     0,    13,    15,    14,
-      16,    17,    18,    19,    20,    12,     0,     0,    11,     0,
-       0,     0,     0,     0,    11,     0,     0,     0,     0,    10,
-      11,     0,     0,     9
+       0,     7,     5,     6,    15,     2,     8,    25,    26,    27,
+      28,    29,    30,    31,    32,     0,     0,    17,    19,    18,
+      20,    21,    22,    23,    24,    16,     0,     0,    15,     0,
+       0,     0,     0,     0,    15,     0,    15,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,    15,     0,    10,
+      15,     0,     0,    13,     0,     0,    12,     0,     0,    11,
+      14,     9
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -39,   -39,   -39,    38,    35,   -39,   -38,   -39,   -37,    -6
+     -41,   -41,   -41,    62,    10,   -41,   -32,   -41,   -40,   -33
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
@@ -624,20 +629,24 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      40,     1,     1,    42,    13,     5,    46,     6,     8,    48,
-       7,    12,    51,     8,    52,    27,    28,    29,    30,    31,
-      32,    33,    17,    18,    19,    34,    20,    21,    22,    23,
-      24,    39,    14,    15,    37,    43,    38,    41,    44,    47,
-      45,     9,    49,    50,     0,    53,    16
+      43,     1,     1,     7,    39,    41,    40,    52,     8,    45,
+      55,    48,    47,    51,    50,     5,    54,     6,    12,    13,
+      58,    16,    67,    61,    68,    62,    14,    65,    64,    27,
+      28,    29,    30,    31,    32,    33,    17,    18,    19,    34,
+      20,    21,    22,    23,    24,    15,    37,     8,    38,    42,
+      44,    46,    49,    53,    56,    57,     0,    59,    60,     0,
+      63,    66,    69,    70,    71,     9
 };
 
 static const yytype_int8 yycheck[] =
 {
-      38,     3,     3,    40,     7,     4,    44,     6,    10,    46,
-       0,     5,    50,    10,    51,    11,    12,    13,    14,    15,
-      16,    17,    22,    23,    24,    21,    26,    27,    28,    29,
-      30,    37,     7,     9,     7,    41,     7,     7,     7,    45,
-       7,     3,     8,     7,    -1,     8,    11
+      40,     3,     3,     0,    37,    38,    38,    47,    10,    42,
+      50,    44,    44,    46,    46,     4,    49,     6,     5,     7,
+      53,    11,    62,    56,    64,    57,     7,    60,    60,    11,
+      12,    13,    14,    15,    16,    17,    22,    23,    24,    21,
+      26,    27,    28,    29,    30,     9,     7,    10,     7,     7,
+       7,     7,     7,     7,     7,     7,    -1,     8,     7,    -1,
+       8,     8,     8,     8,     8,     3
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
@@ -648,24 +657,28 @@ static const yytype_int8 yystos[] =
       35,    36,     5,     7,     7,     9,    35,    22,    23,    24,
       26,    27,    28,    29,    30,    37,    40,    11,    12,    13,
       14,    15,    16,    17,    21,    38,    39,     7,     7,    40,
-      37,     7,    39,    40,     7,     7,    37,    40,    39,     8,
-       7,    37,    39,     8
+      37,    40,     7,    39,     7,    40,     7,    37,    40,     7,
+      37,    40,    39,     7,    40,    39,     7,     7,    40,     8,
+       7,    40,    37,     8,    37,    40,     8,    39,    39,     8,
+       8,     8
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
        0,    31,    32,    33,    33,    34,    34,    35,    35,    36,
-      36,    37,    37,    38,    38,    38,    38,    38,    38,    38,
-      39,    40,    40,    40,    40,    40,    40,    40,    40
+      36,    36,    36,    36,    36,    37,    37,    38,    38,    38,
+      38,    38,    38,    38,    39,    40,    40,    40,    40,    40,
+      40,    40,    40
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
        0,     2,     3,     1,     2,     3,     3,     0,     2,    14,
-      10,     0,     2,     1,     1,     1,     1,     1,     1,     1,
-       1,     1,     1,     1,     1,     1,     1,     1,     1
+      10,    13,    12,    11,    13,     0,     2,     1,     1,     1,
+       1,     1,     1,     1,     1,     1,     1,     1,     1,     1,
+       1,     1,     1
 };
 
 
@@ -1131,7 +1144,7 @@ yyreduce:
   case 5: /* selection: SELECT MAP MAPNAME  */
 #line 51 "analizer.y"
                                { printf("Mapa seleccionado\n"); }
-#line 1135 "analizer.tab.c"
+#line 1148 "analizer.tab.c"
     break;
 
   case 6: /* selection: SELECT PLAYER PNAME  */
@@ -1145,119 +1158,143 @@ yyreduce:
                     exit(1); 
                 }
               }
-#line 1149 "analizer.tab.c"
+#line 1162 "analizer.tab.c"
     break;
 
   case 9: /* turn_structure: TURN PNAME movements shoot PNAME movements shoot PNAME movements shoot PNAME movements shoot FINISH_TURN  */
 #line 66 "analizer.y"
                                                                                                                           { printf("Turno completado\n"); }
-#line 1155 "analizer.tab.c"
+#line 1168 "analizer.tab.c"
     break;
 
   case 10: /* turn_structure: TURN PNAME special_attack PNAME special_attack PNAME special_attack PNAME special_attack FINISH_TURN  */
 #line 67 "analizer.y"
                                                                                                                       { printf("Turno completado\n"); }
-#line 1161 "analizer.tab.c"
+#line 1174 "analizer.tab.c"
     break;
 
-  case 13: /* movement: FORWARD  */
-#line 74 "analizer.y"
-                   { printf("Avanzar\n"); }
-#line 1167 "analizer.tab.c"
+  case 11: /* turn_structure: TURN PNAME movements shoot PNAME movements shoot PNAME movements shoot PNAME special_attack FINISH_TURN  */
+#line 68 "analizer.y"
+                                                                                                                         { printf("Turno completado\n"); }
+#line 1180 "analizer.tab.c"
     break;
 
-  case 14: /* movement: REVERSE  */
-#line 75 "analizer.y"
-                   { printf("Retroceder\n"); }
-#line 1173 "analizer.tab.c"
+  case 12: /* turn_structure: TURN PNAME movements shoot PNAME movements shoot PNAME special_attack PNAME special_attack FINISH_TURN  */
+#line 69 "analizer.y"
+                                                                                                                        { printf("Turno completado\n");}
+#line 1186 "analizer.tab.c"
     break;
 
-  case 15: /* movement: RIGHT  */
-#line 76 "analizer.y"
-                 { printf("Derecha\n"); }
-#line 1179 "analizer.tab.c"
+  case 13: /* turn_structure: TURN PNAME movements shoot PNAME special_attack PNAME special_attack PNAME special_attack FINISH_TURN  */
+#line 70 "analizer.y"
+                                                                                                                       { printf("Turno completado\n"); }
+#line 1192 "analizer.tab.c"
     break;
 
-  case 16: /* movement: LEFT  */
-#line 77 "analizer.y"
-                { printf("Izquierda\n"); }
-#line 1185 "analizer.tab.c"
+  case 14: /* turn_structure: TURN PNAME movements shoot PNAME special_attack PNAME movements shoot PNAME movements shoot FINISH_TURN  */
+#line 71 "analizer.y"
+                                                                                                                         { printf("Turno completado\n"); }
+#line 1198 "analizer.tab.c"
     break;
 
-  case 17: /* movement: TURBO  */
+  case 17: /* movement: FORWARD  */
 #line 78 "analizer.y"
-                 { printf("Turbo\n"); }
-#line 1191 "analizer.tab.c"
+                   { printf("Avanzar\n"); }
+#line 1204 "analizer.tab.c"
     break;
 
-  case 18: /* movement: BRAKE  */
+  case 18: /* movement: REVERSE  */
 #line 79 "analizer.y"
-                 { printf("Frenar\n"); }
-#line 1197 "analizer.tab.c"
+                   { printf("Retroceder\n"); }
+#line 1210 "analizer.tab.c"
     break;
 
-  case 19: /* movement: ACCELERATE  */
+  case 19: /* movement: RIGHT  */
 #line 80 "analizer.y"
-                      { printf("Acelerar\n"); }
-#line 1203 "analizer.tab.c"
+                 { printf("Derecha\n"); }
+#line 1216 "analizer.tab.c"
     break;
 
-  case 20: /* shoot: MACHINE_GUN  */
+  case 20: /* movement: LEFT  */
+#line 81 "analizer.y"
+                { printf("Izquierda\n"); }
+#line 1222 "analizer.tab.c"
+    break;
+
+  case 21: /* movement: TURBO  */
 #line 82 "analizer.y"
-                   { printf("Disparar ametralladora\n"); }
-#line 1209 "analizer.tab.c"
+                 { printf("Turbo\n"); }
+#line 1228 "analizer.tab.c"
     break;
 
-  case 21: /* special_attack: FIREBALL_FREEZE_ATTACK  */
+  case 22: /* movement: BRAKE  */
+#line 83 "analizer.y"
+                 { printf("Frenar\n"); }
+#line 1234 "analizer.tab.c"
+    break;
+
+  case 23: /* movement: ACCELERATE  */
 #line 84 "analizer.y"
-                                       { printf("Disparar bola de fuego congelante\n"); }
-#line 1215 "analizer.tab.c"
+                      { printf("Acelerar\n"); }
+#line 1240 "analizer.tab.c"
     break;
 
-  case 22: /* special_attack: BE_INVISIBLE  */
-#line 85 "analizer.y"
-                    { printf("Volverse invisible\n"); }
-#line 1221 "analizer.tab.c"
-    break;
-
-  case 23: /* special_attack: CHARGED_UP_MINE  */
+  case 24: /* shoot: MACHINE_GUN  */
 #line 86 "analizer.y"
-                       { printf("Colocar mina cargada\n"); }
-#line 1227 "analizer.tab.c"
+                   { printf("Disparar ametralladora\n"); }
+#line 1246 "analizer.tab.c"
     break;
 
-  case 24: /* special_attack: FREEZE_ATTACK  */
-#line 87 "analizer.y"
-                     { printf("Ataque congelante\n"); }
-#line 1233 "analizer.tab.c"
-    break;
-
-  case 25: /* special_attack: ENERGY_SHIELD  */
+  case 25: /* special_attack: FIREBALL_FREEZE_ATTACK  */
 #line 88 "analizer.y"
-                     { printf("Activar escudo de energía\n"); }
-#line 1239 "analizer.tab.c"
+                                       { printf("Disparar bola de fuego congelante\n"); }
+#line 1252 "analizer.tab.c"
     break;
 
-  case 26: /* special_attack: MINE  */
+  case 26: /* special_attack: BE_INVISIBLE  */
 #line 89 "analizer.y"
-            { printf("Colocar mina\n"); }
-#line 1245 "analizer.tab.c"
+                    { printf("Volverse invisible\n"); }
+#line 1258 "analizer.tab.c"
     break;
 
-  case 27: /* special_attack: FIRE_REAR_WEAPONS  */
+  case 27: /* special_attack: CHARGED_UP_MINE  */
 #line 90 "analizer.y"
-                         { printf("Disparar armas traseras\n"); }
-#line 1251 "analizer.tab.c"
+                       { printf("Colocar mina cargada\n"); }
+#line 1264 "analizer.tab.c"
     break;
 
-  case 28: /* special_attack: JUMP  */
+  case 28: /* special_attack: FREEZE_ATTACK  */
 #line 91 "analizer.y"
+                     { printf("Ataque congelante\n"); }
+#line 1270 "analizer.tab.c"
+    break;
+
+  case 29: /* special_attack: ENERGY_SHIELD  */
+#line 92 "analizer.y"
+                     { printf("Activar escudo de energía\n"); }
+#line 1276 "analizer.tab.c"
+    break;
+
+  case 30: /* special_attack: MINE  */
+#line 93 "analizer.y"
+            { printf("Colocar mina\n"); }
+#line 1282 "analizer.tab.c"
+    break;
+
+  case 31: /* special_attack: FIRE_REAR_WEAPONS  */
+#line 94 "analizer.y"
+                         { printf("Disparar armas traseras\n"); }
+#line 1288 "analizer.tab.c"
+    break;
+
+  case 32: /* special_attack: JUMP  */
+#line 95 "analizer.y"
             { printf("Saltar\n"); }
-#line 1257 "analizer.tab.c"
+#line 1294 "analizer.tab.c"
     break;
 
 
-#line 1261 "analizer.tab.c"
+#line 1298 "analizer.tab.c"
 
       default: break;
     }
@@ -1450,7 +1487,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 94 "analizer.y"
+#line 98 "analizer.y"
 
 
 int main(int argc, char **argv) {

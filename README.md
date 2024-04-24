@@ -25,6 +25,12 @@ Este ejemplo ilustra un programa que cuenta las palabras, caracteres y líneas d
     cc lex.yy.c -lfl -o word-counter
     ./word-counter < example.txt 
 ### Parte 2
+#### Comandos para ejecucion
+    ```bash
+    flex analizer.l
+    bison -d analizer.y
+	gcc -o analizer analizer.tab.c lex.yy.c -lfl
+    ./analizer example.txt 
 ####  Descripción
 Analizador sintáctico para un combate de la arena de Twisted Metal. Un combate de la arena debe iniciar
 seleccionando el escenario, luego seleccionando 4 jugadores, entonces inicia el combate. En esta aproximación cada jugador hace un movimiento en su turno, además de que un ataque se hace a un solo oponente y será exitoso o no con base en la poscisión del objetivo.
