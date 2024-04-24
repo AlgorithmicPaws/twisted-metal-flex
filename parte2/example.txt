@@ -1,5 +1,8 @@
-SELECT Paris
-SELECT PLAYER Axel
-SELECT PLAYER Mr. Grimm
-SELECT PLAYER Darktooth
-SELECT PLAYER Thumper
+SELECT MAP Paris
+select PLAYER Minion
+select PLAYER Thumper
+select PLAYER Twister
+select PLAYER Warthog
+Turno:
+Minion ⇑⇒⇑BX⇒⇑Y
+Termina.

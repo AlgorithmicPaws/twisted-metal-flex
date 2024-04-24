@@ -1,14 +1,47 @@
-%option noyywrap nodefault yylineno
 %{
 #include "analizer.tab.h"
 %}
 
-%option noyywrap
-
 %%
+[ Ss ][ Ee ][ Ll ][ Ee ][ Cc ][ Tt ]  {return SELECT; }
+[ Mm ][ Aa ][ Pp ]                    {return MAP; }
+[ Pp ][ Ll ][ Aa ][ Yy ][ Ee ][ Rr ]  {return PLAYER; }
+"Turno:"                              {return TURN; }
+"Termina."                            {return FINISH_TURN; }
+"Moscow"                              {return MAPNAME; }
+"Paris"                               {return MAPNAME; }
+"Amazonía"                            {return MAPNAME; }
+"New York"                            {return MAPNAME; }
+"Antarctica"                          {return MAPNAME; }
+"Holland"                             {return MAPNAME; }
+"Hong Kong"                           {return MAPNAME; }
+"Axel"                                {return PNAME; }
+"Grasshopper"                         {return PNAME; }
+"Mr. Grimm"                           {return PNAME; }
+"Hammerhead"                          {return PNAME; }
+"Minion"                              {return PNAME; }
+"Outlaw 2"                            {return PNAME; }
+"Roadkill"                            {return PNAME; }
+"Shadow"                              {return PNAME; }
+"Mr. Slam"                            {return PNAME; }  
+"Spectre"                             {return PNAME; }
+"Sweettooth"                          {return PNAME; }
+"Thumper"                             {return PNAME; }
+"Twister"                             {return PNAME; }
+"Warthog"                             {return PNAME; }
+"Darktooth"                           {return PNAME; }
+"⇑"                                   {return FORWARD; }
+"⇒"                                   { return RIGHT; }
+"⇓"                                   { return REVERSE; }
+"⇐"                                   { return LEFT; }
+"Y"                                   { return TURBO; }
+"B"                                   { return BRAKE; }
+"X"                                   { return ACCELERATE; }
+"L1"                                  { return SECONDARY_WEAPON_1; }
+"L2"                                  { return FIRE_SELECTED_WEAPON; }
+"R1"                                  { return SECONDARY_WEAPON_2; }
+"R2"                                  { return MACHINE_GUN; }
 
-[ Ss ][ Ee ][ Ll ][ Ee ][ Cc ][ Tt ] { printf("Se reconoci la palabra 'select'\n"); return SELECT; }
-[ Mm ][ Aa ][ Pp ]                { printf("Se reconoci la palabra 'map'\n"); return MAP; }
-[ Pp ][ Ll ][ Aa ][ Yy ][ Ee ][ Rr ]  { printf("Se reconoci la palabra 'player'\n"); return PLAYER; }
-.           { printf("Carácter no reconocido: %s\n", yytext); }
+[ \t\n]+
+.           { printf("Caracter no reconocido: %s\n", yytext); }
 %%
