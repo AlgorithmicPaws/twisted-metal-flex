@@ -4,10 +4,10 @@ select PLAYER Thumper
 select PLAYER Twister
 select PLAYER Warthog
 Turno:
-Thumper ⇑⇒⇑BX⇒⇑YL1R1L2
-Minion ⇑⇒⇑BX⇒⇑YL2
-Twister ⇑⇒⇑BX⇒⇑YR1L2
-Warthog ⇑⇒⇑BX⇒⇑YL1L2
+Thumper ⇑⇒⇓⇑BX⇒⇑YL1R1L2
+Minion ⇑⇒⇓⇓⇓⇑BX⇒⇑YL2
+Twister ⇑⇒⇓⇑BX⇒⇑YR1L2
+Warthog ⇑⇒⇓⇓⇑BX⇒⇑YL1L2
 Termina.
 Turno:
 Thumper ⇑⇒⇑BX⇒⇑YL1R1L2

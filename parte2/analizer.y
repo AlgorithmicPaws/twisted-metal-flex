@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h> 
+#define MAP_SIZE 10
 extern FILE *yyin; 
 int yylex(void);
 int yyerror(char* s);
@@ -13,16 +14,99 @@ int repeat_num_players = 0;
 char map_name[20];
 int map_selected = 0;
 char player_name_check[20];
-int vida1 = 0;
-int vida2 = 0;
-int vida3 = 0;
-int vida4 = 0;
+int map[MAP_SIZE][MAP_SIZE]= {0};
+int vidas[4]= {10,10,10,10};
+int direccion[4]= {0,90,180,270};
+typedef struct {
+    int x;
+    int y;
+} Posicion;
+Posicion **posiciones;
+int num_player_playing = 0;
+void check_player_name(char *player_name_check) {
+    if(strcmp(player_name_check, player_name[0]) == 0 || 
+       strcmp(player_name_check, player_name[1]) == 0 || 
+       strcmp(player_name_check, player_name[2]) == 0 || 
+       strcmp(player_name_check, player_name[3]) == 0) {
+        if((strcmp(player_name_check, repeat_player_name[0]) == 0 || 
+            strcmp(player_name_check, repeat_player_name[1]) == 0 || 
+            strcmp(player_name_check, repeat_player_name[2]) == 0 || 
+            strcmp(player_name_check, repeat_player_name[3]) == 0)) {
+            printf("Personaje repetido\n ");
+            exit(1); 
+        } else {
+            strncpy(repeat_player_name[repeat_num_players++], player_name_check, sizeof(repeat_player_name[0]) - 1);
+        }
+    } else {
+        printf("Personaje no seleccionado\n ");
+        exit(1);
+    }
+}
+void move_forward(int player_index) {
+    int nueva_posicion[2] = {posiciones[player_index]->x, posiciones[player_index]->y}; // Nueva posición del jugador
 
+    // Update the position based on the direction
+    if (direccion[player_index] == 0) {
+        nueva_posicion[0] -= 1;
+    } else if (direccion[player_index] == 90) {
+        nueva_posicion[1] += 1;
+    } else if (direccion[player_index] == 180) {
+        nueva_posicion[0] += 1;
+    } else if (direccion[player_index] == 270) {
+        nueva_posicion[1] -= 1;
+    }
+
+    // Check if the new position is within the map bounds
+    if (nueva_posicion[0] >= 0 && nueva_posicion[0] < MAP_SIZE &&
+        nueva_posicion[1] >= 0 && nueva_posicion[1] < MAP_SIZE) {
+        posiciones[player_index]->x = nueva_posicion[0];
+        posiciones[player_index]->y = nueva_posicion[1];
+        printf("Personaje %d: x = %d, y = %d\n", player_index, posiciones[player_index]->x, posiciones[player_index]->y);
+    } else {
+        printf("¡Movimiento inválido! El jugador se encuentra en el borde del mapa.\n");
+        exit(1);
+    }
+}
+void move_backward(int player_index) {
+    int nueva_posicion[2] = {posiciones[player_index]->x, posiciones[player_index]->y}; // Nueva posición del jugador
+
+    // Update the position based on the direction
+    if (direccion[player_index] == 0) {
+        nueva_posicion[0] += 1;
+    } else if (direccion[player_index] == 90) {
+        nueva_posicion[1] -= 1;
+    } else if (direccion[player_index] == 180) {
+        nueva_posicion[0] -= 1;
+    } else if (direccion[player_index] == 270) {
+        nueva_posicion[1] += 1;
+    }
+
+    // Check if the new position is within the map bounds
+    if (nueva_posicion[0] >= 0 && nueva_posicion[0] < MAP_SIZE &&
+        nueva_posicion[1] >= 0 && nueva_posicion[1] < MAP_SIZE) {
+        posiciones[player_index]->x = nueva_posicion[0];
+        posiciones[player_index]->y = nueva_posicion[1];
+        printf("Personaje %d: x = %d, y = %d\n", player_index, posiciones[player_index]->x, posiciones[player_index]->y);
+    } else {
+        printf("¡Movimiento inválido! El jugador se encuentra en el borde del mapa.\n");
+        exit(1);
+    }
+}
+void cambiar_direccion(int* jugador_direccion, int nueva_direccion) {
+    if (nueva_direccion == 90) {
+        *jugador_direccion = (*jugador_direccion + 90) % 360;
+    } else if (nueva_direccion == 270) {
+        *jugador_direccion = (*jugador_direccion - 90 + 360) % 360;
+    } else if (nueva_direccion == 0) {
+        *jugador_direccion = 0; // Apuntar hacia arriba
+    } else if (nueva_direccion == 180) {
+        *jugador_direccion = 180; // Apuntar hacia abajo
+    }
+}
 %}
 %union {
     char *str;
 }
-
 %token SELECT
 %token MAP
 %token MAPNAME
@@ -52,7 +136,6 @@ int vida4 = 0;
 %token MINE
 %token FIRE_REAR_WEAPONS
 %token JUMP
-
 %%
 
 start : selections turn_structures FINISH_GAME
@@ -87,70 +170,28 @@ turn_structures : turn_structure
                 ;
 
 turn_structure : TURN turn turn turn turn FINISH_TURN {repeat_num_players = 0;
+    num_player_playing = 0;
     for (int i = 0; i < 4; i++) {
         memset(repeat_player_name[i], 0, sizeof(repeat_player_name[i])); // Fill each element with null bytes
     }
     }
-               ;
+    ;
 
-turn: PNAME special_attack {   if(strcmp(player_name_check, $1) == 0){
-                                printf("Personaje repetido\n ");
-                                exit(1); 
-                                }else{
-                                char *player_name_check = $1;
-                                 if(strcmp(player_name_check, player_name[0]) == 0 || 
-                                strcmp(player_name_check, player_name[1]) == 0 || 
-                                strcmp(player_name_check, player_name[2]) == 0 || 
-                                strcmp(player_name_check, player_name[3]) == 0) {
-                                printf("Todo bien\n ");
-                                } else {
-                                printf("Personaje no seleccionado\n ");
-                                exit(1);
-                            }}}
-    | PNAME movements shoot {   if(strcmp(player_name_check, $1) == 0){
-                                printf("Personaje repetido\n ");
-                                exit(1); 
-                                }else{
-                                char *player_name_check = $1;
-                                 if(strcmp(player_name_check, player_name[0]) == 0 || 
-                                strcmp(player_name_check, player_name[1]) == 0 || 
-                                strcmp(player_name_check, player_name[2]) == 0 || 
-                                strcmp(player_name_check, player_name[3]) == 0) {
-                                printf("Todo bien\n ");
-                                } else {
-                                printf("Personaje no seleccionado\n ");
-                                exit(1);
-                            }}}
-    | PNAME movements secundary_attacks{ 
-                                char *player_name_check = $1;
-                                 if(strcmp(player_name_check, player_name[0]) == 0 || 
-                                strcmp(player_name_check, player_name[1]) == 0 || 
-                                strcmp(player_name_check, player_name[2]) == 0 || 
-                                strcmp(player_name_check, player_name[3]) == 0) {
-                                    if((strcmp(player_name_check, repeat_player_name[0]) == 0 || 
-                                        strcmp(player_name_check, repeat_player_name[1]) == 0 || 
-                                        strcmp(player_name_check, repeat_player_name[2]) == 0 || 
-                                        strcmp(player_name_check, repeat_player_name[3]) == 0)){
-                                        printf("Personaje repetido\n ");
-                                        exit(1); 
-                                     }else{
-                                        strncpy(repeat_player_name[repeat_num_players++], player_name_check, sizeof(repeat_player_name[0]) - 1);
-                                } } else {
-                                printf("Personaje no seleccionado\n ");
-                                exit(1);
-                            }}
+turn: PNAME special_attack { check_player_name($1);num_player_playing++;} 
+    | PNAME movements shoot { check_player_name($1);num_player_playing++;} 
+    | PNAME movements secundary_attacks{ check_player_name($1);num_player_playing++;} 
 
 movements : movement
           | movements movement
           ;
 
-movement : FORWARD { printf("Avanzar "); }
-         | REVERSE { printf("Retroceder "); }
-         | RIGHT { printf("Derecha "); }
-         | LEFT { printf("Izquierda "); }
-         | TURBO { printf("Turbo "); }
+movement : FORWARD {move_forward(num_player_playing); }
+         | REVERSE {move_backward(num_player_playing); }
+         | RIGHT {cambiar_direccion(&direccion[num_player_playing], 90);}
+         | LEFT {cambiar_direccion(&direccion[num_player_playing], 270);}
+         | TURBO {move_forward(num_player_playing);}
          | BRAKE { printf("Frenar "); }
-         | ACCELERATE { printf("Acelerar "); }
+         | ACCELERATE { move_forward(num_player_playing); }
 
 shoot: MACHINE_GUN { printf("Disparar ametralladora\n"); }
      ;
@@ -172,6 +213,21 @@ special_attack: FIREBALL_FREEZE_ATTACK { printf("Disparar bola de fuego congelan
 %%
 
 int main(int argc, char **argv) {
+    posiciones = (Posicion **)malloc(4 * sizeof(Posicion *));
+    posiciones[0] = (Posicion *)malloc(sizeof(Posicion));
+    posiciones[1] = (Posicion *)malloc(sizeof(Posicion));
+    posiciones[2] = (Posicion *)malloc(sizeof(Posicion));
+    posiciones[3] = (Posicion *)malloc(sizeof(Posicion));
+
+    posiciones[0]->x = 5;
+    posiciones[0]->y = 2;
+    posiciones[1]->x = 5;
+    posiciones[1]->y = 8;
+    posiciones[2]->x = 2;
+    posiciones[2]->y = 5;
+    posiciones[3]->x = 8;
+    posiciones[3]->y = 5;
+
     if (argc != 2) {
         fprintf(stderr, "Uso: %s archivo.txt\n", argv[0]);
         return 1;

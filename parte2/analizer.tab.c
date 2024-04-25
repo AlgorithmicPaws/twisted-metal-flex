@@ -72,6 +72,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h> 
+#define MAP_SIZE 10
 extern FILE *yyin; 
 int yylex(void);
 int yyerror(char* s);
@@ -83,13 +84,97 @@ int repeat_num_players = 0;
 char map_name[20];
 int map_selected = 0;
 char player_name_check[20];
-int vida1 = 0;
-int vida2 = 0;
-int vida3 = 0;
-int vida4 = 0;
+int map[MAP_SIZE][MAP_SIZE]= {0};
+int vidas[4]= {10,10,10,10};
+int direccion[4]= {0,90,180,270};
+typedef struct {
+    int x;
+    int y;
+} Posicion;
+Posicion **posiciones;
+int num_player_playing = 0;
+void check_player_name(char *player_name_check) {
+    if(strcmp(player_name_check, player_name[0]) == 0 || 
+       strcmp(player_name_check, player_name[1]) == 0 || 
+       strcmp(player_name_check, player_name[2]) == 0 || 
+       strcmp(player_name_check, player_name[3]) == 0) {
+        if((strcmp(player_name_check, repeat_player_name[0]) == 0 || 
+            strcmp(player_name_check, repeat_player_name[1]) == 0 || 
+            strcmp(player_name_check, repeat_player_name[2]) == 0 || 
+            strcmp(player_name_check, repeat_player_name[3]) == 0)) {
+            printf("Personaje repetido\n ");
+            exit(1); 
+        } else {
+            strncpy(repeat_player_name[repeat_num_players++], player_name_check, sizeof(repeat_player_name[0]) - 1);
+        }
+    } else {
+        printf("Personaje no seleccionado\n ");
+        exit(1);
+    }
+}
+void move_forward(int player_index) {
+    int nueva_posicion[2] = {posiciones[player_index]->x, posiciones[player_index]->y}; // Nueva posición del jugador
 
+    // Update the position based on the direction
+    if (direccion[player_index] == 0) {
+        nueva_posicion[0] -= 1;
+    } else if (direccion[player_index] == 90) {
+        nueva_posicion[1] += 1;
+    } else if (direccion[player_index] == 180) {
+        nueva_posicion[0] += 1;
+    } else if (direccion[player_index] == 270) {
+        nueva_posicion[1] -= 1;
+    }
 
-#line 93 "analizer.tab.c"
+    // Check if the new position is within the map bounds
+    if (nueva_posicion[0] >= 0 && nueva_posicion[0] < MAP_SIZE &&
+        nueva_posicion[1] >= 0 && nueva_posicion[1] < MAP_SIZE) {
+        posiciones[player_index]->x = nueva_posicion[0];
+        posiciones[player_index]->y = nueva_posicion[1];
+        printf("Personaje %d: x = %d, y = %d\n", player_index, posiciones[player_index]->x, posiciones[player_index]->y);
+    } else {
+        printf("¡Movimiento inválido! El jugador se encuentra en el borde del mapa.\n");
+        exit(1);
+    }
+}
+void move_backward(int player_index) {
+    int nueva_posicion[2] = {posiciones[player_index]->x, posiciones[player_index]->y}; // Nueva posición del jugador
+
+    // Update the position based on the direction
+    if (direccion[player_index] == 0) {
+        nueva_posicion[0] += 1;
+    } else if (direccion[player_index] == 90) {
+        nueva_posicion[1] -= 1;
+    } else if (direccion[player_index] == 180) {
+        nueva_posicion[0] -= 1;
+    } else if (direccion[player_index] == 270) {
+        nueva_posicion[1] += 1;
+    }
+
+    // Check if the new position is within the map bounds
+    if (nueva_posicion[0] >= 0 && nueva_posicion[0] < MAP_SIZE &&
+        nueva_posicion[1] >= 0 && nueva_posicion[1] < MAP_SIZE) {
+        posiciones[player_index]->x = nueva_posicion[0];
+        posiciones[player_index]->y = nueva_posicion[1];
+        printf("Personaje %d: x = %d, y = %d\n", player_index, posiciones[player_index]->x, posiciones[player_index]->y);
+    } else {
+        printf("¡Movimiento inválido! El jugador se encuentra en el borde del mapa.\n");
+        exit(1);
+    }
+}
+void cambiar_direccion(int* jugador_direccion, int nueva_direccion) {
+    if (nueva_direccion == 90) {
+        *jugador_direccion = (*jugador_direccion + 90) % 360;
+    } else if (nueva_direccion == 270) {
+        *jugador_direccion = (*jugador_direccion - 90 + 360) % 360;
+    } else if (nueva_direccion == 0) {
+        *jugador_direccion = 0; // Apuntar hacia arriba
+    } else if (nueva_direccion == 180) {
+        *jugador_direccion = 180; // Apuntar hacia abajo
+    }
+}
+
+#line 178 "analizer.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -550,10 +635,10 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    58,    58,    62,    63,    66,    75,    85,    86,    89,
-      96,   110,   124,   143,   144,   147,   148,   149,   150,   151,
-     152,   153,   155,   158,   159,   162,   163,   166,   167,   168,
-     169
+       0,   141,   141,   145,   146,   149,   158,   168,   169,   172,
+     180,   181,   182,   184,   185,   188,   189,   190,   191,   192,
+     193,   194,   196,   199,   200,   203,   204,   207,   208,   209,
+     210
 };
 #endif
 
@@ -1146,7 +1231,7 @@ yyreduce:
   switch (yyn)
     {
   case 5: /* selection: SELECT MAP MAPNAME  */
-#line 66 "analizer.y"
+#line 149 "analizer.y"
                                { 
                 if (map_selected) {
                     printf("Error: Solo se puede seleccionar un mapa.\n");
@@ -1156,11 +1241,11 @@ yyreduce:
                 strncpy(map_name, yytext, sizeof(map_name) - 1);
                 map_selected = 1; 
             }
-#line 1160 "analizer.tab.c"
+#line 1245 "analizer.tab.c"
     break;
 
   case 6: /* selection: SELECT PLAYER PNAME  */
-#line 75 "analizer.y"
+#line 158 "analizer.y"
                                 { 
                 printf("Personaje seleccionado\n"); 
                 if (num_players < 4) {
@@ -1170,172 +1255,130 @@ yyreduce:
                     exit(1); 
                 }
               }
-#line 1174 "analizer.tab.c"
+#line 1259 "analizer.tab.c"
     break;
 
   case 9: /* turn_structure: TURN turn turn turn turn FINISH_TURN  */
-#line 89 "analizer.y"
+#line 172 "analizer.y"
                                                       {repeat_num_players = 0;
+    num_player_playing = 0;
     for (int i = 0; i < 4; i++) {
         memset(repeat_player_name[i], 0, sizeof(repeat_player_name[i])); // Fill each element with null bytes
     }
     }
-#line 1184 "analizer.tab.c"
+#line 1270 "analizer.tab.c"
     break;
 
   case 10: /* turn: PNAME special_attack  */
-#line 96 "analizer.y"
-                           {   if(strcmp(player_name_check, (yyvsp[-1].str)) == 0){
-                                printf("Personaje repetido\n ");
-                                exit(1); 
-                                }else{
-                                char *player_name_check = (yyvsp[-1].str);
-                                 if(strcmp(player_name_check, player_name[0]) == 0 || 
-                                strcmp(player_name_check, player_name[1]) == 0 || 
-                                strcmp(player_name_check, player_name[2]) == 0 || 
-                                strcmp(player_name_check, player_name[3]) == 0) {
-                                printf("Todo bien\n ");
-                                } else {
-                                printf("Personaje no seleccionado\n ");
-                                exit(1);
-                            }}}
-#line 1203 "analizer.tab.c"
+#line 180 "analizer.y"
+                           { check_player_name((yyvsp[-1].str));num_player_playing++;}
+#line 1276 "analizer.tab.c"
     break;
 
   case 11: /* turn: PNAME movements shoot  */
-#line 110 "analizer.y"
-                            {   if(strcmp(player_name_check, (yyvsp[-2].str)) == 0){
-                                printf("Personaje repetido\n ");
-                                exit(1); 
-                                }else{
-                                char *player_name_check = (yyvsp[-2].str);
-                                 if(strcmp(player_name_check, player_name[0]) == 0 || 
-                                strcmp(player_name_check, player_name[1]) == 0 || 
-                                strcmp(player_name_check, player_name[2]) == 0 || 
-                                strcmp(player_name_check, player_name[3]) == 0) {
-                                printf("Todo bien\n ");
-                                } else {
-                                printf("Personaje no seleccionado\n ");
-                                exit(1);
-                            }}}
-#line 1222 "analizer.tab.c"
+#line 181 "analizer.y"
+                            { check_player_name((yyvsp[-2].str));num_player_playing++;}
+#line 1282 "analizer.tab.c"
     break;
 
   case 12: /* turn: PNAME movements secundary_attacks  */
-#line 124 "analizer.y"
-                                       { 
-                                char *player_name_check = (yyvsp[-2].str);
-                                 if(strcmp(player_name_check, player_name[0]) == 0 || 
-                                strcmp(player_name_check, player_name[1]) == 0 || 
-                                strcmp(player_name_check, player_name[2]) == 0 || 
-                                strcmp(player_name_check, player_name[3]) == 0) {
-                                    if((strcmp(player_name_check, repeat_player_name[0]) == 0 || 
-                                        strcmp(player_name_check, repeat_player_name[1]) == 0 || 
-                                        strcmp(player_name_check, repeat_player_name[2]) == 0 || 
-                                        strcmp(player_name_check, repeat_player_name[3]) == 0)){
-                                        printf("Personaje repetido\n ");
-                                        exit(1); 
-                                     }else{
-                                        strncpy(repeat_player_name[repeat_num_players++], player_name_check, sizeof(repeat_player_name[0]) - 1);
-                                } } else {
-                                printf("Personaje no seleccionado\n ");
-                                exit(1);
-                            }}
-#line 1245 "analizer.tab.c"
+#line 182 "analizer.y"
+                                       { check_player_name((yyvsp[-2].str));num_player_playing++;}
+#line 1288 "analizer.tab.c"
     break;
 
   case 15: /* movement: FORWARD  */
-#line 147 "analizer.y"
-                   { printf("Avanzar "); }
-#line 1251 "analizer.tab.c"
+#line 188 "analizer.y"
+                   {move_forward(num_player_playing); }
+#line 1294 "analizer.tab.c"
     break;
 
   case 16: /* movement: REVERSE  */
-#line 148 "analizer.y"
-                   { printf("Retroceder "); }
-#line 1257 "analizer.tab.c"
+#line 189 "analizer.y"
+                   {move_backward(num_player_playing); }
+#line 1300 "analizer.tab.c"
     break;
 
   case 17: /* movement: RIGHT  */
-#line 149 "analizer.y"
-                 { printf("Derecha "); }
-#line 1263 "analizer.tab.c"
+#line 190 "analizer.y"
+                 {cambiar_direccion(&direccion[num_player_playing], 90);}
+#line 1306 "analizer.tab.c"
     break;
 
   case 18: /* movement: LEFT  */
-#line 150 "analizer.y"
-                { printf("Izquierda "); }
-#line 1269 "analizer.tab.c"
+#line 191 "analizer.y"
+                {cambiar_direccion(&direccion[num_player_playing], 270);}
+#line 1312 "analizer.tab.c"
     break;
 
   case 19: /* movement: TURBO  */
-#line 151 "analizer.y"
-                 { printf("Turbo "); }
-#line 1275 "analizer.tab.c"
+#line 192 "analizer.y"
+                 {move_forward(num_player_playing);}
+#line 1318 "analizer.tab.c"
     break;
 
   case 20: /* movement: BRAKE  */
-#line 152 "analizer.y"
+#line 193 "analizer.y"
                  { printf("Frenar "); }
-#line 1281 "analizer.tab.c"
+#line 1324 "analizer.tab.c"
     break;
 
   case 21: /* movement: ACCELERATE  */
-#line 153 "analizer.y"
-                      { printf("Acelerar "); }
-#line 1287 "analizer.tab.c"
+#line 194 "analizer.y"
+                      { move_forward(num_player_playing); }
+#line 1330 "analizer.tab.c"
     break;
 
   case 22: /* shoot: MACHINE_GUN  */
-#line 155 "analizer.y"
+#line 196 "analizer.y"
                    { printf("Disparar ametralladora\n"); }
-#line 1293 "analizer.tab.c"
+#line 1336 "analizer.tab.c"
     break;
 
   case 23: /* secundary_attacks: FIRE_SELECTED_WEAPON  */
-#line 158 "analizer.y"
+#line 199 "analizer.y"
                                          { printf("Disparo secundario\n"); }
-#line 1299 "analizer.tab.c"
+#line 1342 "analizer.tab.c"
     break;
 
   case 25: /* select_secundary_attack: SECONDARY_WEAPON_1  */
-#line 162 "analizer.y"
+#line 203 "analizer.y"
                                             { printf("Cambio arma izq\n"); }
-#line 1305 "analizer.tab.c"
+#line 1348 "analizer.tab.c"
     break;
 
   case 26: /* select_secundary_attack: SECONDARY_WEAPON_2  */
-#line 163 "analizer.y"
+#line 204 "analizer.y"
                           { printf("Cambio arma der\n"); }
-#line 1311 "analizer.tab.c"
+#line 1354 "analizer.tab.c"
     break;
 
   case 27: /* special_attack: FIREBALL_FREEZE_ATTACK  */
-#line 166 "analizer.y"
+#line 207 "analizer.y"
                                        { printf("Disparar bola de fuego congelante\n"); }
-#line 1317 "analizer.tab.c"
+#line 1360 "analizer.tab.c"
     break;
 
   case 28: /* special_attack: BE_INVISIBLE  */
-#line 167 "analizer.y"
+#line 208 "analizer.y"
                     { printf("Volverse invisible\n"); }
-#line 1323 "analizer.tab.c"
+#line 1366 "analizer.tab.c"
     break;
 
   case 29: /* special_attack: FREEZE_ATTACK  */
-#line 168 "analizer.y"
+#line 209 "analizer.y"
                      { printf("Ataque congelante\n"); }
-#line 1329 "analizer.tab.c"
+#line 1372 "analizer.tab.c"
     break;
 
   case 30: /* special_attack: JUMP  */
-#line 169 "analizer.y"
+#line 210 "analizer.y"
             { printf("Saltar\n"); }
-#line 1335 "analizer.tab.c"
+#line 1378 "analizer.tab.c"
     break;
 
 
-#line 1339 "analizer.tab.c"
+#line 1382 "analizer.tab.c"
 
       default: break;
     }
@@ -1528,10 +1571,25 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 172 "analizer.y"
+#line 213 "analizer.y"
 
 
 int main(int argc, char **argv) {
+    posiciones = (Posicion **)malloc(4 * sizeof(Posicion *));
+    posiciones[0] = (Posicion *)malloc(sizeof(Posicion));
+    posiciones[1] = (Posicion *)malloc(sizeof(Posicion));
+    posiciones[2] = (Posicion *)malloc(sizeof(Posicion));
+    posiciones[3] = (Posicion *)malloc(sizeof(Posicion));
+
+    posiciones[0]->x = 5;
+    posiciones[0]->y = 2;
+    posiciones[1]->x = 5;
+    posiciones[1]->y = 8;
+    posiciones[2]->x = 2;
+    posiciones[2]->y = 5;
+    posiciones[3]->x = 8;
+    posiciones[3]->y = 5;
+
     if (argc != 2) {
         fprintf(stderr, "Uso: %s archivo.txt\n", argv[0]);
         return 1;
