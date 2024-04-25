@@ -58,20 +58,20 @@ seleccionando el escenario, luego seleccionando 4 jugadores, entonces inicia el 
 	##### Lista de Personajes 
 	| Personajes | Descripción|  Vida    |
 	|------------|------------|----------|
-	| Axel       | Es un hombre aprisionado en 2 ruedas gigantes por culpa de su padre. Se une al torneo para conseguir el valor de hacerle frente a su padre.| 27 |
-	| Grasshopper| Krysta Sparks es la piloto de este buggy. Afirma ser la hija de Calypso y su deseo es asesinarlo.                                                   |   25     |
-	| Mr. Grimm  | La parca pilotea esta motocicleta con sidecar. Se une al torneo porque desea facilitar su consumo de almas.                                         |    23    |
-	| Hammerhead | Los pilotos de esta Monster Truck son Mike y Stu, dos cabezahuecas que ingresan al torneo para desear poder volar.                                  |   30     |
-	| Minion     | El demonio Minion conduce este vehículo APC guerrillero. Solo se une al torneo por el deseo de vengarse de Calypso por haberle robado sus poderes.  |  35      |
-	| Outlaw 2   | Jamie Roberts maneja este coche de policía. Es la hermana del Outlaw de la primera entrega y busca a su hermano perdido.                            |     25   |
-	| Roadkill   | Piloteado por Marcus Kane, un vagabundo que cree que todo el universo de Twisted Metal es algo imaginario.                                          | 23     |
-	| Shadow     | Su piloto es Mortimer y conduce un coche fúnebre. Es el guardián de las almas perdidas que fueron asesinadas.                                       |   20  |
-	| Mr. Slam   | Un tractor de pala conducido por Simon Whittlebone, un arquitecto frustrado que desea construir el rascacielos más grande del mundo.                     | 24   |
-	| Spectre    | Un Corvette blanco conducido por Ken Masters, un actor cuyo único deseo es la fama absoluta.                                                              |18  |
-	| Sweettooth | El camión de helados de la anterior entrega vuelve conducido por Kane Needles, un payaso homicida.                                                        | 30  |
-	| Thumper    | Una limusina rosa manejada por Bruce Cochrane, un gangster que desea ser el emperador del mundo.                                                         |23   |
-	| Twister    | Este F1 es conducido por Amanda Watts, una piloto de carreras cuyo deseo es viajar a la velocidad de la luz.                                             |20      |
-	| Warthog    | El capitán Rogers maneja este blindado de guerra. Se une al torneo para desear ser joven otra vez.                                                 | 35                                                             |
+	| Axel       | Es un hombre aprisionado en 2 ruedas gigantes por culpa de su padre. Se une al torneo para conseguir el valor de hacerle frente a su padre.| 10 |
+	| Grasshopper| Krysta Sparks es la piloto de este buggy. Afirma ser la hija de Calypso y su deseo es asesinarlo.                                                   |   10     |
+	| Mr. Grimm  | La parca pilotea esta motocicleta con sidecar. Se une al torneo porque desea facilitar su consumo de almas.                                         |    10    |
+	| Hammerhead | Los pilotos de esta Monster Truck son Mike y Stu, dos cabezahuecas que ingresan al torneo para desear poder volar.                                  |   10     |
+	| Minion     | El demonio Minion conduce este vehículo APC guerrillero. Solo se une al torneo por el deseo de vengarse de Calypso por haberle robado sus poderes.  |  10      |
+	| Outlaw 2   | Jamie Roberts maneja este coche de policía. Es la hermana del Outlaw de la primera entrega y busca a su hermano perdido.                            |     10   |
+	| Roadkill   | Piloteado por Marcus Kane, un vagabundo que cree que todo el universo de Twisted Metal es algo imaginario.                                          | 10     |
+	| Shadow     | Su piloto es Mortimer y conduce un coche fúnebre. Es el guardián de las almas perdidas que fueron asesinadas.                                       |   10  |
+	| Mr. Slam   | Un tractor de pala conducido por Simon Whittlebone, un arquitecto frustrado que desea construir el rascacielos más grande del mundo.                     | 10   |
+	| Spectre    | Un Corvette blanco conducido por Ken Masters, un actor cuyo único deseo es la fama absoluta.                                                              |10  |
+	| Sweettooth | El camión de helados de la anterior entrega vuelve conducido por Kane Needles, un payaso homicida.                                                        | 10  |
+	| Thumper    | Una limusina rosa manejada por Bruce Cochrane, un gangster que desea ser el emperador del mundo.                                                         |10   |
+	| Twister    | Este F1 es conducido por Amanda Watts, una piloto de carreras cuyo deseo es viajar a la velocidad de la luz.                                             |10      |
+	| Warthog    | El capitán Rogers maneja este blindado de guerra. Se une al torneo para desear ser joven otra vez.                                                 | 10                                                             |
 	| Darktooth  | Esta extraña mezcla de Sweettooth con Darkside es el jefe final del juego. No es seleccionable.                                                     |50            |
 
 3. **Acciones y movimientos**:
@@ -94,17 +94,18 @@ seleccionando el escenario, luego seleccionando 4 jugadores, entonces inicia el 
 	|-------------------------------------------------|--------------------------------|-------|
 	| Fireball and freeze attack                      | L1, L2, R1, R2, ⇒, ⇐, ⇑       |    10   |
 	| Be Invisible                                    | ⇐, ⇐, ⇓, ⇓                    |    0   |
-	| Charged up mine                                 | ⇒, ⇐, ⇓, ⇓                    |    0   |
-	| Freeze                                          | ⇑, ⇓, ⇑                       |    5   |
-	| Freeze Attack                                   | ⇒, ⇐, ⇑                       |    5   |
-	| Energy shield                                   | ⇒, ⇒, ⇓, ⇓                    |    0   |
-	| Mine                                            | ⇒, ⇐, ⇓                       |    7   |
-	| Disparar armas desde la parte trasera          | ⇐, ⇒, ⇓, L2                    |    2   |
+	| Freeze Attack                                   | ⇒, ⇐, ⇑                       |    5   
 	| Saltar                                          | ⇑, ⇐, ⇐                       |    0   |
 4. **Anatomia de un turno**:
 En su turno, cada personaje puede relizar las siguientes acciones:
-	Puede desplazarse y disparar la ametralladora, desplazarse y disparar arma seleccionada, o realizar un ataque avanzado.
-Ademas se supondra que un ataque se hace a un solo oponente y ser´a exitoso con probabilidad de 1 si se encuentra en linea recta hacia donde mira el jugador, con probabilidad de 0.5 si esta en el cono de vicion del personaje el cual es cun cono delimitado por las diagonales desde su pocicion hasta los bordes de la matriz en la direccion que mira el personaje, es decir la mitad de las veces el ataque de un jugador impactara en otro en ese rango.
+	Puede desplazarse y disparar la ametralladora, desplazarse y disparar arma seleccionada, o realizar un ataque avanzado. Ademas se supondra que un ataque se hace a un solo oponente y sera exitoso con probabilidad de 1 si se encuentra en linea recta hacia donde mira el jugador, con probabilidad de 0.5 si esta en el cono de vicion del personaje el cual es cun cono delimitado por las diagonales desde su pocicion hasta los bordes de la matriz en la direccion que mira el personaje, es decir la mitad de las veces el ataque de un jugador impactara en otro en ese rango.
+	Para que el turno se desarrolle de manera adecuada siempre debe poner los personajes en el mismo orden. 
+	La estructura que se debe seguir es:
+	-`Turno:`
+	-`<nombre del personaje> acciones`
+	-`<nombre del personaje> acciones`
+	-`<nombre del personaje> acciones`
+	-`Temina.`
 
 
 ---

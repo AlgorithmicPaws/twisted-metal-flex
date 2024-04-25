@@ -83,8 +83,13 @@ int repeat_num_players = 0;
 char map_name[20];
 int map_selected = 0;
 char player_name_check[20];
+int vida1 = 0;
+int vida2 = 0;
+int vida3 = 0;
+int vida4 = 0;
 
-#line 88 "analizer.tab.c"
+
+#line 93 "analizer.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -545,10 +550,10 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    53,    53,    57,    58,    61,    70,    80,    81,    84,
-      91,   105,   119,   138,   139,   142,   143,   144,   145,   146,
-     147,   148,   150,   153,   154,   157,   158,   161,   162,   163,
-     164
+       0,    58,    58,    62,    63,    66,    75,    85,    86,    89,
+      96,   110,   124,   143,   144,   147,   148,   149,   150,   151,
+     152,   153,   155,   158,   159,   162,   163,   166,   167,   168,
+     169
 };
 #endif
 
@@ -1141,7 +1146,7 @@ yyreduce:
   switch (yyn)
     {
   case 5: /* selection: SELECT MAP MAPNAME  */
-#line 61 "analizer.y"
+#line 66 "analizer.y"
                                { 
                 if (map_selected) {
                     printf("Error: Solo se puede seleccionar un mapa.\n");
@@ -1151,11 +1156,11 @@ yyreduce:
                 strncpy(map_name, yytext, sizeof(map_name) - 1);
                 map_selected = 1; 
             }
-#line 1155 "analizer.tab.c"
+#line 1160 "analizer.tab.c"
     break;
 
   case 6: /* selection: SELECT PLAYER PNAME  */
-#line 70 "analizer.y"
+#line 75 "analizer.y"
                                 { 
                 printf("Personaje seleccionado\n"); 
                 if (num_players < 4) {
@@ -1165,21 +1170,21 @@ yyreduce:
                     exit(1); 
                 }
               }
-#line 1169 "analizer.tab.c"
+#line 1174 "analizer.tab.c"
     break;
 
   case 9: /* turn_structure: TURN turn turn turn turn FINISH_TURN  */
-#line 84 "analizer.y"
+#line 89 "analizer.y"
                                                       {repeat_num_players = 0;
     for (int i = 0; i < 4; i++) {
         memset(repeat_player_name[i], 0, sizeof(repeat_player_name[i])); // Fill each element with null bytes
     }
     }
-#line 1179 "analizer.tab.c"
+#line 1184 "analizer.tab.c"
     break;
 
   case 10: /* turn: PNAME special_attack  */
-#line 91 "analizer.y"
+#line 96 "analizer.y"
                            {   if(strcmp(player_name_check, (yyvsp[-1].str)) == 0){
                                 printf("Personaje repetido\n ");
                                 exit(1); 
@@ -1194,11 +1199,11 @@ yyreduce:
                                 printf("Personaje no seleccionado\n ");
                                 exit(1);
                             }}}
-#line 1198 "analizer.tab.c"
+#line 1203 "analizer.tab.c"
     break;
 
   case 11: /* turn: PNAME movements shoot  */
-#line 105 "analizer.y"
+#line 110 "analizer.y"
                             {   if(strcmp(player_name_check, (yyvsp[-2].str)) == 0){
                                 printf("Personaje repetido\n ");
                                 exit(1); 
@@ -1213,11 +1218,11 @@ yyreduce:
                                 printf("Personaje no seleccionado\n ");
                                 exit(1);
                             }}}
-#line 1217 "analizer.tab.c"
+#line 1222 "analizer.tab.c"
     break;
 
   case 12: /* turn: PNAME movements secundary_attacks  */
-#line 119 "analizer.y"
+#line 124 "analizer.y"
                                        { 
                                 char *player_name_check = (yyvsp[-2].str);
                                  if(strcmp(player_name_check, player_name[0]) == 0 || 
@@ -1236,101 +1241,101 @@ yyreduce:
                                 printf("Personaje no seleccionado\n ");
                                 exit(1);
                             }}
-#line 1240 "analizer.tab.c"
+#line 1245 "analizer.tab.c"
     break;
 
   case 15: /* movement: FORWARD  */
-#line 142 "analizer.y"
+#line 147 "analizer.y"
                    { printf("Avanzar "); }
-#line 1246 "analizer.tab.c"
+#line 1251 "analizer.tab.c"
     break;
 
   case 16: /* movement: REVERSE  */
-#line 143 "analizer.y"
+#line 148 "analizer.y"
                    { printf("Retroceder "); }
-#line 1252 "analizer.tab.c"
+#line 1257 "analizer.tab.c"
     break;
 
   case 17: /* movement: RIGHT  */
-#line 144 "analizer.y"
+#line 149 "analizer.y"
                  { printf("Derecha "); }
-#line 1258 "analizer.tab.c"
+#line 1263 "analizer.tab.c"
     break;
 
   case 18: /* movement: LEFT  */
-#line 145 "analizer.y"
+#line 150 "analizer.y"
                 { printf("Izquierda "); }
-#line 1264 "analizer.tab.c"
+#line 1269 "analizer.tab.c"
     break;
 
   case 19: /* movement: TURBO  */
-#line 146 "analizer.y"
+#line 151 "analizer.y"
                  { printf("Turbo "); }
-#line 1270 "analizer.tab.c"
+#line 1275 "analizer.tab.c"
     break;
 
   case 20: /* movement: BRAKE  */
-#line 147 "analizer.y"
+#line 152 "analizer.y"
                  { printf("Frenar "); }
-#line 1276 "analizer.tab.c"
+#line 1281 "analizer.tab.c"
     break;
 
   case 21: /* movement: ACCELERATE  */
-#line 148 "analizer.y"
+#line 153 "analizer.y"
                       { printf("Acelerar "); }
-#line 1282 "analizer.tab.c"
+#line 1287 "analizer.tab.c"
     break;
 
   case 22: /* shoot: MACHINE_GUN  */
-#line 150 "analizer.y"
+#line 155 "analizer.y"
                    { printf("Disparar ametralladora\n"); }
-#line 1288 "analizer.tab.c"
+#line 1293 "analizer.tab.c"
     break;
 
   case 23: /* secundary_attacks: FIRE_SELECTED_WEAPON  */
-#line 153 "analizer.y"
+#line 158 "analizer.y"
                                          { printf("Disparo secundario\n"); }
-#line 1294 "analizer.tab.c"
+#line 1299 "analizer.tab.c"
     break;
 
   case 25: /* select_secundary_attack: SECONDARY_WEAPON_1  */
-#line 157 "analizer.y"
+#line 162 "analizer.y"
                                             { printf("Cambio arma izq\n"); }
-#line 1300 "analizer.tab.c"
+#line 1305 "analizer.tab.c"
     break;
 
   case 26: /* select_secundary_attack: SECONDARY_WEAPON_2  */
-#line 158 "analizer.y"
+#line 163 "analizer.y"
                           { printf("Cambio arma der\n"); }
-#line 1306 "analizer.tab.c"
+#line 1311 "analizer.tab.c"
     break;
 
   case 27: /* special_attack: FIREBALL_FREEZE_ATTACK  */
-#line 161 "analizer.y"
+#line 166 "analizer.y"
                                        { printf("Disparar bola de fuego congelante\n"); }
-#line 1312 "analizer.tab.c"
+#line 1317 "analizer.tab.c"
     break;
 
   case 28: /* special_attack: BE_INVISIBLE  */
-#line 162 "analizer.y"
+#line 167 "analizer.y"
                     { printf("Volverse invisible\n"); }
-#line 1318 "analizer.tab.c"
+#line 1323 "analizer.tab.c"
     break;
 
   case 29: /* special_attack: FREEZE_ATTACK  */
-#line 163 "analizer.y"
+#line 168 "analizer.y"
                      { printf("Ataque congelante\n"); }
-#line 1324 "analizer.tab.c"
+#line 1329 "analizer.tab.c"
     break;
 
   case 30: /* special_attack: JUMP  */
-#line 164 "analizer.y"
+#line 169 "analizer.y"
             { printf("Saltar\n"); }
-#line 1330 "analizer.tab.c"
+#line 1335 "analizer.tab.c"
     break;
 
 
-#line 1334 "analizer.tab.c"
+#line 1339 "analizer.tab.c"
 
       default: break;
     }
@@ -1523,7 +1528,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 167 "analizer.y"
+#line 172 "analizer.y"
 
 
 int main(int argc, char **argv) {
