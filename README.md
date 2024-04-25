@@ -25,21 +25,16 @@ Este ejemplo ilustra un programa que cuenta las palabras, caracteres y líneas d
     cc lex.yy.c -lfl -o word-counter
     ./word-counter < example.txt 
 ### Parte 2
-#### Comandos para ejecucion
-    ```bash
-    flex analizer.l
-    bison -d analizer.y
-	gcc -o analizer analizer.tab.c lex.yy.c -lfl
-    ./analizer example.txt 
 ####  Descripción
 Analizador sintáctico para un combate de la arena de Twisted Metal. Un combate de la arena debe iniciar
 seleccionando el escenario, luego seleccionando 4 jugadores, entonces inicia el combate. En esta aproximación cada jugador hace un movimiento en su turno, además de que un ataque se hace a un solo oponente y será exitoso o no con base en la poscisión del objetivo.
 1. **Comandos para compilar y correr programa**:
    Es importante cambiar `example.txt` por el nombre del archivo con el cual se correra el programa.
     ```bash
-    flex analizer.l
-    cc lex.yy.c -lfl -o analizer
-    ./analizer example.txt 
+	flex analizer.l
+   	 bison -d analizer.y
+	gcc -o analizer analizer.tab.c lex.yy.c -lfl
+    	./analizer example.tx
 2. **Selección de Mapa y Personajes**:
 	En el documento de juego, los jugadores deben seleccionar un mapa y cuatro personajes para el combate. Esto se realiza mediante comandos específicos en el documento.
 
@@ -87,9 +82,9 @@ seleccionando el escenario, luego seleccionando 4 jugadores, entonces inicia el 
 	| Cambiar dirección a la derecha | ⇒ |
 	| Retroceder            | ⇓                 |
 	| Cambiar dirección a la izquierda | ⇐ |
-	| Turbo                 | △                 |
-	| Frenar                | ⃝                 |
-	| Acelerar              | □                 |
+	| Turbo                 | Y                 |
+	| Frenar                | B                 |
+	| Acelerar              | X                 |
 	| Cambiar arma secundaria 1 | L1 |
 	| Disparar arma seleccionada | L2          |
 	| Cambiar arma secundaria 2 | R1 |
@@ -109,8 +104,8 @@ seleccionando el escenario, luego seleccionando 4 jugadores, entonces inicia el 
 4. **Anatomia de un turno**:
 En su turno, cada personaje puede relizar las siguientes acciones:
 	Puede desplazarse y disparar la ametralladora, desplazarse y disparar arma seleccionada, o realizar un ataque avanzado.
-Ademas se supondra que un ataque se hace a un solo oponente y ser´a exitoso con probabilidad de 1 si se encuentra entre
-[-15, 15] grados, con probabilidad de 0.5 si esta entre [-45, -15) y (15. 45] grados, es decir la mitad de las veces el ataque de un jugador impactara en otro en ese rango.
+Ademas se supondra que un ataque se hace a un solo oponente y ser´a exitoso con probabilidad de 1 si se encuentra en linea recta hacia donde mira el jugador, con probabilidad de 0.5 si esta en el cono de vicion del personaje el cual es cun cono delimitado por las diagonales desde su pocicion hasta los bordes de la matriz en la direccion que mira el personaje, es decir la mitad de las veces el ataque de un jugador impactara en otro en ese rango.
+
 
 ---
 
