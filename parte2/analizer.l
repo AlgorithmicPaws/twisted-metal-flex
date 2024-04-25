@@ -16,21 +16,21 @@
 "Antarctica"                          {return MAPNAME; }
 "Holland"                             {return MAPNAME; }
 "Hong Kong"                           {return MAPNAME; }
-"Axel"                                {return PNAME; }
-"Grasshopper"                         {return PNAME; }
-"Mr. Grimm"                           {return PNAME; }
-"Hammerhead"                          {return PNAME; }
-"Minion"                              {return PNAME; }
-"Outlaw 2"                            {return PNAME; }
-"Roadkill"                            {return PNAME; }
-"Shadow"                              {return PNAME; }
-"Mr. Slam"                            {return PNAME; }  
-"Spectre"                             {return PNAME; }
-"Sweettooth"                          {return PNAME; }
-"Thumper"                             {return PNAME; }
-"Twister"                             {return PNAME; }
-"Warthog"                             {return PNAME; }
-"Darktooth"                           {return PNAME; }
+"Axel"                                { yylval.str = strdup(yytext); return PNAME; }
+"Grasshopper"                         { yylval.str = strdup(yytext); return PNAME; }
+"Mr. Grimm"                           { yylval.str = strdup(yytext); return PNAME; }
+"Hammerhead"                          { yylval.str = strdup(yytext); return PNAME; }
+"Minion"                              { yylval.str = strdup(yytext); return PNAME; }
+"Outlaw 2"                            { yylval.str = strdup(yytext); return PNAME; }
+"Roadkill"                            { yylval.str = strdup(yytext); return PNAME; }
+"Shadow"                              { yylval.str = strdup(yytext); return PNAME; }
+"Mr. Slam"                            { yylval.str = strdup(yytext); return PNAME; }
+"Spectre"                             { yylval.str = strdup(yytext); return PNAME; }
+"Sweettooth"                          { yylval.str = strdup(yytext); return PNAME; }
+"Thumper"                             { yylval.str = strdup(yytext); return PNAME; }
+"Twister"                             { yylval.str = strdup(yytext); return PNAME; }
+"Warthog"                             { yylval.str = strdup(yytext); return PNAME; }
+"Darktooth"                           { yylval.str = strdup(yytext); return NPNAME; }
 "⇑"                                   {return FORWARD; }
 "⇒"                                   { return RIGHT; }
 "⇓"                                   { return REVERSE; }
