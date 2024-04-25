@@ -59,36 +59,46 @@ extern int yydebug;
     MAPNAME = 260,                 /* MAPNAME  */
     PLAYER = 261,                  /* PLAYER  */
     PNAME = 262,                   /* PNAME  */
-    FINISH_TURN = 263,             /* FINISH_TURN  */
-    FINISH_GAME = 264,             /* FINISH_GAME  */
-    TURN = 265,                    /* TURN  */
-    FORWARD = 266,                 /* FORWARD  */
-    RIGHT = 267,                   /* RIGHT  */
-    REVERSE = 268,                 /* REVERSE  */
-    LEFT = 269,                    /* LEFT  */
-    TURBO = 270,                   /* TURBO  */
-    BRAKE = 271,                   /* BRAKE  */
-    ACCELERATE = 272,              /* ACCELERATE  */
-    SECONDARY_WEAPON_1 = 273,      /* SECONDARY_WEAPON_1  */
-    FIRE_SELECTED_WEAPON = 274,    /* FIRE_SELECTED_WEAPON  */
-    SECONDARY_WEAPON_2 = 275,      /* SECONDARY_WEAPON_2  */
-    MACHINE_GUN = 276,             /* MACHINE_GUN  */
-    FIREBALL_FREEZE_ATTACK = 277,  /* FIREBALL_FREEZE_ATTACK  */
-    BE_INVISIBLE = 278,            /* BE_INVISIBLE  */
-    CHARGED_UP_MINE = 279,         /* CHARGED_UP_MINE  */
-    FREEZE = 280,                  /* FREEZE  */
-    FREEZE_ATTACK = 281,           /* FREEZE_ATTACK  */
-    ENERGY_SHIELD = 282,           /* ENERGY_SHIELD  */
-    MINE = 283,                    /* MINE  */
-    FIRE_REAR_WEAPONS = 284,       /* FIRE_REAR_WEAPONS  */
-    JUMP = 285                     /* JUMP  */
+    NPNAME = 263,                  /* NPNAME  */
+    FINISH_TURN = 264,             /* FINISH_TURN  */
+    FINISH_GAME = 265,             /* FINISH_GAME  */
+    TURN = 266,                    /* TURN  */
+    FORWARD = 267,                 /* FORWARD  */
+    RIGHT = 268,                   /* RIGHT  */
+    REVERSE = 269,                 /* REVERSE  */
+    LEFT = 270,                    /* LEFT  */
+    TURBO = 271,                   /* TURBO  */
+    BRAKE = 272,                   /* BRAKE  */
+    ACCELERATE = 273,              /* ACCELERATE  */
+    SECONDARY_WEAPON_1 = 274,      /* SECONDARY_WEAPON_1  */
+    FIRE_SELECTED_WEAPON = 275,    /* FIRE_SELECTED_WEAPON  */
+    SECONDARY_WEAPON_2 = 276,      /* SECONDARY_WEAPON_2  */
+    MACHINE_GUN = 277,             /* MACHINE_GUN  */
+    FIREBALL_FREEZE_ATTACK = 278,  /* FIREBALL_FREEZE_ATTACK  */
+    BE_INVISIBLE = 279,            /* BE_INVISIBLE  */
+    CHARGED_UP_MINE = 280,         /* CHARGED_UP_MINE  */
+    FREEZE = 281,                  /* FREEZE  */
+    FREEZE_ATTACK = 282,           /* FREEZE_ATTACK  */
+    ENERGY_SHIELD = 283,           /* ENERGY_SHIELD  */
+    MINE = 284,                    /* MINE  */
+    FIRE_REAR_WEAPONS = 285,       /* FIRE_REAR_WEAPONS  */
+    JUMP = 286                     /* JUMP  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+union YYSTYPE
+{
+#line 17 "analizer.y"
+
+    char *str;
+
+#line 99 "analizer.tab.h"
+
+};
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif

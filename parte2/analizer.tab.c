@@ -77,9 +77,14 @@ int yylex(void);
 int yyerror(char* s);
 extern char *yytext; 
 char player_name[4][20];
+char repeat_player_name[4][20];
 int num_players = 0;
+int repeat_num_players = 0;
+char map_name[20];
+int map_selected = 0;
+char player_name_check[20];
 
-#line 83 "analizer.tab.c"
+#line 88 "analizer.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -115,39 +120,43 @@ enum yysymbol_kind_t
   YYSYMBOL_MAPNAME = 5,                    /* MAPNAME  */
   YYSYMBOL_PLAYER = 6,                     /* PLAYER  */
   YYSYMBOL_PNAME = 7,                      /* PNAME  */
-  YYSYMBOL_FINISH_TURN = 8,                /* FINISH_TURN  */
-  YYSYMBOL_FINISH_GAME = 9,                /* FINISH_GAME  */
-  YYSYMBOL_TURN = 10,                      /* TURN  */
-  YYSYMBOL_FORWARD = 11,                   /* FORWARD  */
-  YYSYMBOL_RIGHT = 12,                     /* RIGHT  */
-  YYSYMBOL_REVERSE = 13,                   /* REVERSE  */
-  YYSYMBOL_LEFT = 14,                      /* LEFT  */
-  YYSYMBOL_TURBO = 15,                     /* TURBO  */
-  YYSYMBOL_BRAKE = 16,                     /* BRAKE  */
-  YYSYMBOL_ACCELERATE = 17,                /* ACCELERATE  */
-  YYSYMBOL_SECONDARY_WEAPON_1 = 18,        /* SECONDARY_WEAPON_1  */
-  YYSYMBOL_FIRE_SELECTED_WEAPON = 19,      /* FIRE_SELECTED_WEAPON  */
-  YYSYMBOL_SECONDARY_WEAPON_2 = 20,        /* SECONDARY_WEAPON_2  */
-  YYSYMBOL_MACHINE_GUN = 21,               /* MACHINE_GUN  */
-  YYSYMBOL_FIREBALL_FREEZE_ATTACK = 22,    /* FIREBALL_FREEZE_ATTACK  */
-  YYSYMBOL_BE_INVISIBLE = 23,              /* BE_INVISIBLE  */
-  YYSYMBOL_CHARGED_UP_MINE = 24,           /* CHARGED_UP_MINE  */
-  YYSYMBOL_FREEZE = 25,                    /* FREEZE  */
-  YYSYMBOL_FREEZE_ATTACK = 26,             /* FREEZE_ATTACK  */
-  YYSYMBOL_ENERGY_SHIELD = 27,             /* ENERGY_SHIELD  */
-  YYSYMBOL_MINE = 28,                      /* MINE  */
-  YYSYMBOL_FIRE_REAR_WEAPONS = 29,         /* FIRE_REAR_WEAPONS  */
-  YYSYMBOL_JUMP = 30,                      /* JUMP  */
-  YYSYMBOL_YYACCEPT = 31,                  /* $accept  */
-  YYSYMBOL_start = 32,                     /* start  */
-  YYSYMBOL_selections = 33,                /* selections  */
-  YYSYMBOL_selection = 34,                 /* selection  */
-  YYSYMBOL_turn_structures = 35,           /* turn_structures  */
-  YYSYMBOL_turn_structure = 36,            /* turn_structure  */
-  YYSYMBOL_movements = 37,                 /* movements  */
-  YYSYMBOL_movement = 38,                  /* movement  */
-  YYSYMBOL_shoot = 39,                     /* shoot  */
-  YYSYMBOL_special_attack = 40             /* special_attack  */
+  YYSYMBOL_NPNAME = 8,                     /* NPNAME  */
+  YYSYMBOL_FINISH_TURN = 9,                /* FINISH_TURN  */
+  YYSYMBOL_FINISH_GAME = 10,               /* FINISH_GAME  */
+  YYSYMBOL_TURN = 11,                      /* TURN  */
+  YYSYMBOL_FORWARD = 12,                   /* FORWARD  */
+  YYSYMBOL_RIGHT = 13,                     /* RIGHT  */
+  YYSYMBOL_REVERSE = 14,                   /* REVERSE  */
+  YYSYMBOL_LEFT = 15,                      /* LEFT  */
+  YYSYMBOL_TURBO = 16,                     /* TURBO  */
+  YYSYMBOL_BRAKE = 17,                     /* BRAKE  */
+  YYSYMBOL_ACCELERATE = 18,                /* ACCELERATE  */
+  YYSYMBOL_SECONDARY_WEAPON_1 = 19,        /* SECONDARY_WEAPON_1  */
+  YYSYMBOL_FIRE_SELECTED_WEAPON = 20,      /* FIRE_SELECTED_WEAPON  */
+  YYSYMBOL_SECONDARY_WEAPON_2 = 21,        /* SECONDARY_WEAPON_2  */
+  YYSYMBOL_MACHINE_GUN = 22,               /* MACHINE_GUN  */
+  YYSYMBOL_FIREBALL_FREEZE_ATTACK = 23,    /* FIREBALL_FREEZE_ATTACK  */
+  YYSYMBOL_BE_INVISIBLE = 24,              /* BE_INVISIBLE  */
+  YYSYMBOL_CHARGED_UP_MINE = 25,           /* CHARGED_UP_MINE  */
+  YYSYMBOL_FREEZE = 26,                    /* FREEZE  */
+  YYSYMBOL_FREEZE_ATTACK = 27,             /* FREEZE_ATTACK  */
+  YYSYMBOL_ENERGY_SHIELD = 28,             /* ENERGY_SHIELD  */
+  YYSYMBOL_MINE = 29,                      /* MINE  */
+  YYSYMBOL_FIRE_REAR_WEAPONS = 30,         /* FIRE_REAR_WEAPONS  */
+  YYSYMBOL_JUMP = 31,                      /* JUMP  */
+  YYSYMBOL_YYACCEPT = 32,                  /* $accept  */
+  YYSYMBOL_start = 33,                     /* start  */
+  YYSYMBOL_selections = 34,                /* selections  */
+  YYSYMBOL_selection = 35,                 /* selection  */
+  YYSYMBOL_turn_structures = 36,           /* turn_structures  */
+  YYSYMBOL_turn_structure = 37,            /* turn_structure  */
+  YYSYMBOL_turn = 38,                      /* turn  */
+  YYSYMBOL_movements = 39,                 /* movements  */
+  YYSYMBOL_movement = 40,                  /* movement  */
+  YYSYMBOL_shoot = 41,                     /* shoot  */
+  YYSYMBOL_secundary_attacks = 42,         /* secundary_attacks  */
+  YYSYMBOL_select_secundary_attack = 43,   /* select_secundary_attack  */
+  YYSYMBOL_special_attack = 44             /* special_attack  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -475,19 +484,19 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  7
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   65
+#define YYLAST   45
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  31
+#define YYNTOKENS  32
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  10
+#define YYNNTS  13
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  32
+#define YYNRULES  30
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  72
+#define YYNSTATES  45
 
 /* YYMAXUTOK -- Last valid token kind.  */
-#define YYMAXUTOK   285
+#define YYMAXUTOK   286
 
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
@@ -529,17 +538,17 @@ static const yytype_int8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
       15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
-      25,    26,    27,    28,    29,    30
+      25,    26,    27,    28,    29,    30,    31
 };
 
 #if YYDEBUG
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
-static const yytype_int8 yyrline[] =
+static const yytype_uint8 yyrline[] =
 {
-       0,    43,    43,    47,    48,    51,    52,    62,    63,    66,
-      67,    68,    69,    70,    71,    74,    75,    78,    79,    80,
-      81,    82,    83,    84,    86,    88,    89,    90,    91,    92,
-      93,    94,    95
+       0,    53,    53,    57,    58,    61,    70,    80,    81,    84,
+      91,   105,   119,   138,   139,   142,   143,   144,   145,   146,
+     147,   148,   150,   153,   154,   157,   158,   161,   162,   163,
+     164
 };
 #endif
 
@@ -556,14 +565,15 @@ static const char *yysymbol_name (yysymbol_kind_t yysymbol) YY_ATTRIBUTE_UNUSED;
 static const char *const yytname[] =
 {
   "\"end of file\"", "error", "\"invalid token\"", "SELECT", "MAP",
-  "MAPNAME", "PLAYER", "PNAME", "FINISH_TURN", "FINISH_GAME", "TURN",
-  "FORWARD", "RIGHT", "REVERSE", "LEFT", "TURBO", "BRAKE", "ACCELERATE",
-  "SECONDARY_WEAPON_1", "FIRE_SELECTED_WEAPON", "SECONDARY_WEAPON_2",
-  "MACHINE_GUN", "FIREBALL_FREEZE_ATTACK", "BE_INVISIBLE",
-  "CHARGED_UP_MINE", "FREEZE", "FREEZE_ATTACK", "ENERGY_SHIELD", "MINE",
-  "FIRE_REAR_WEAPONS", "JUMP", "$accept", "start", "selections",
-  "selection", "turn_structures", "turn_structure", "movements",
-  "movement", "shoot", "special_attack", YY_NULLPTR
+  "MAPNAME", "PLAYER", "PNAME", "NPNAME", "FINISH_TURN", "FINISH_GAME",
+  "TURN", "FORWARD", "RIGHT", "REVERSE", "LEFT", "TURBO", "BRAKE",
+  "ACCELERATE", "SECONDARY_WEAPON_1", "FIRE_SELECTED_WEAPON",
+  "SECONDARY_WEAPON_2", "MACHINE_GUN", "FIREBALL_FREEZE_ATTACK",
+  "BE_INVISIBLE", "CHARGED_UP_MINE", "FREEZE", "FREEZE_ATTACK",
+  "ENERGY_SHIELD", "MINE", "FIRE_REAR_WEAPONS", "JUMP", "$accept", "start",
+  "selections", "selection", "turn_structures", "turn_structure", "turn",
+  "movements", "movement", "shoot", "secundary_attacks",
+  "select_secundary_attack", "special_attack", YY_NULLPTR
 };
 
 static const char *
@@ -573,7 +583,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
-#define YYPACT_NINF (-41)
+#define YYPACT_NINF (-16)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -587,14 +597,11 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -1,    11,     3,    -2,   -41,    13,    12,   -41,    19,   -41,
-      36,    37,   -41,   -41,    14,   -41,   -41,   -41,   -41,   -41,
-     -41,   -41,   -41,   -41,   -41,    18,    39,   -41,   -41,   -41,
-     -41,   -41,   -41,   -41,   -41,   -41,    41,    14,    14,    42,
-      18,    43,    14,    44,    14,    45,    14,    18,    46,    14,
-      18,    47,    48,    14,    49,    51,    14,   -41,    52,   -41,
-      14,    53,    18,   -41,    18,    54,   -41,    55,    56,   -41,
-     -41,   -41
+      11,     5,     8,     7,   -16,    10,    12,   -16,    17,   -16,
+      28,    14,   -16,   -16,   -11,    17,   -16,   -16,   -16,   -16,
+     -16,   -16,   -16,   -16,   -16,   -16,   -16,   -16,   -16,    15,
+     -16,   -16,    17,   -16,   -16,   -16,   -16,   -16,   -16,   -16,
+       2,    17,   -16,    30,   -16
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -602,26 +609,25 @@ static const yytype_int8 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       0,     0,     0,     7,     3,     0,     0,     1,     0,     4,
-       0,     7,     5,     6,    15,     2,     8,    25,    26,    27,
-      28,    29,    30,    31,    32,     0,     0,    17,    19,    18,
-      20,    21,    22,    23,    24,    16,     0,     0,    15,     0,
-       0,     0,     0,     0,    15,     0,    15,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,    15,     0,    10,
-      15,     0,     0,    13,     0,     0,    12,     0,     0,    11,
-      14,     9
+       0,     0,     0,     0,     3,     0,     0,     1,     0,     4,
+       0,     7,     5,     6,     0,     0,     2,     8,    15,    17,
+      16,    18,    19,    20,    21,    27,    28,    29,    30,     0,
+      13,    10,     0,    25,    23,    26,    22,    14,    11,    12,
+       0,     0,    24,     0,     9
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -41,   -41,   -41,    62,    10,   -41,   -32,   -41,   -40,   -33
+     -16,   -16,   -16,    37,    31,   -16,   -15,   -16,    16,   -16,
+       1,   -16,   -16
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-       0,     2,     3,     4,    10,    11,    25,    35,    36,    26
+       0,     2,     3,     4,    10,    11,    15,    29,    30,    38,
+      39,    40,    31
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -629,56 +635,49 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      43,     1,     1,     7,    39,    41,    40,    52,     8,    45,
-      55,    48,    47,    51,    50,     5,    54,     6,    12,    13,
-      58,    16,    67,    61,    68,    62,    14,    65,    64,    27,
-      28,    29,    30,    31,    32,    33,    17,    18,    19,    34,
-      20,    21,    22,    23,    24,    15,    37,     8,    38,    42,
-      44,    46,    49,    53,    56,    57,     0,    59,    60,     0,
-      63,    66,    69,    70,    71,     9
+      32,    18,    19,    20,    21,    22,    23,    24,     7,     5,
+       1,     6,    25,    26,     1,    12,    27,    41,     8,    13,
+      28,    33,    34,    35,    14,     8,    43,    18,    19,    20,
+      21,    22,    23,    24,    33,    34,    35,    36,    16,    44,
+       9,    42,    17,     0,     0,    37
 };
 
 static const yytype_int8 yycheck[] =
 {
-      40,     3,     3,     0,    37,    38,    38,    47,    10,    42,
-      50,    44,    44,    46,    46,     4,    49,     6,     5,     7,
-      53,    11,    62,    56,    64,    57,     7,    60,    60,    11,
-      12,    13,    14,    15,    16,    17,    22,    23,    24,    21,
-      26,    27,    28,    29,    30,     9,     7,    10,     7,     7,
-       7,     7,     7,     7,     7,     7,    -1,     8,     7,    -1,
-       8,     8,     8,     8,     8,     3
+      15,    12,    13,    14,    15,    16,    17,    18,     0,     4,
+       3,     6,    23,    24,     3,     5,    27,    32,    11,     7,
+      31,    19,    20,    21,     7,    11,    41,    12,    13,    14,
+      15,    16,    17,    18,    19,    20,    21,    22,    10,     9,
+       3,    40,    11,    -1,    -1,    29
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
    state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,     3,    32,    33,    34,     4,     6,     0,    10,    34,
-      35,    36,     5,     7,     7,     9,    35,    22,    23,    24,
-      26,    27,    28,    29,    30,    37,    40,    11,    12,    13,
-      14,    15,    16,    17,    21,    38,    39,     7,     7,    40,
-      37,    40,     7,    39,     7,    40,     7,    37,    40,     7,
-      37,    40,    39,     7,    40,    39,     7,     7,    40,     8,
-       7,    40,    37,     8,    37,    40,     8,    39,    39,     8,
-       8,     8
+       0,     3,    33,    34,    35,     4,     6,     0,    11,    35,
+      36,    37,     5,     7,     7,    38,    10,    36,    12,    13,
+      14,    15,    16,    17,    18,    23,    24,    27,    31,    39,
+      40,    44,    38,    19,    20,    21,    22,    40,    41,    42,
+      43,    38,    42,    38,     9
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
-       0,    31,    32,    33,    33,    34,    34,    35,    35,    36,
-      36,    36,    36,    36,    36,    37,    37,    38,    38,    38,
-      38,    38,    38,    38,    39,    40,    40,    40,    40,    40,
-      40,    40,    40
+       0,    32,    33,    34,    34,    35,    35,    36,    36,    37,
+      38,    38,    38,    39,    39,    40,    40,    40,    40,    40,
+      40,    40,    41,    42,    42,    43,    43,    44,    44,    44,
+      44
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     3,     1,     2,     3,     3,     0,     2,    14,
-      10,    13,    12,    11,    13,     0,     2,     1,     1,     1,
-       1,     1,     1,     1,     1,     1,     1,     1,     1,     1,
-       1,     1,     1
+       0,     2,     3,     1,     2,     3,     3,     1,     2,     6,
+       2,     3,     3,     1,     2,     1,     1,     1,     1,     1,
+       1,     1,     1,     1,     2,     1,     1,     1,     1,     1,
+       1
 };
 
 
@@ -1142,14 +1141,22 @@ yyreduce:
   switch (yyn)
     {
   case 5: /* selection: SELECT MAP MAPNAME  */
-#line 51 "analizer.y"
-                               { printf("Mapa seleccionado\n"); }
-#line 1148 "analizer.tab.c"
+#line 61 "analizer.y"
+                               { 
+                if (map_selected) {
+                    printf("Error: Solo se puede seleccionar un mapa.\n");
+                    exit(1);
+                }
+                printf("Mapa seleccionado: %s\n", yytext); 
+                strncpy(map_name, yytext, sizeof(map_name) - 1);
+                map_selected = 1; 
+            }
+#line 1155 "analizer.tab.c"
     break;
 
   case 6: /* selection: SELECT PLAYER PNAME  */
-#line 52 "analizer.y"
-                                 { 
+#line 70 "analizer.y"
+                                { 
                 printf("Personaje seleccionado\n"); 
                 if (num_players < 4) {
                     strncpy(player_name[num_players++], yytext, sizeof(player_name[0]) - 1);
@@ -1158,143 +1165,172 @@ yyreduce:
                     exit(1); 
                 }
               }
-#line 1162 "analizer.tab.c"
+#line 1169 "analizer.tab.c"
     break;
 
-  case 9: /* turn_structure: TURN PNAME movements shoot PNAME movements shoot PNAME movements shoot PNAME movements shoot FINISH_TURN  */
-#line 66 "analizer.y"
-                                                                                                                          { printf("Turno completado\n"); }
-#line 1168 "analizer.tab.c"
+  case 9: /* turn_structure: TURN turn turn turn turn FINISH_TURN  */
+#line 84 "analizer.y"
+                                                      {repeat_num_players = 0;
+    for (int i = 0; i < 4; i++) {
+        memset(repeat_player_name[i], 0, sizeof(repeat_player_name[i])); // Fill each element with null bytes
+    }
+    }
+#line 1179 "analizer.tab.c"
     break;
 
-  case 10: /* turn_structure: TURN PNAME special_attack PNAME special_attack PNAME special_attack PNAME special_attack FINISH_TURN  */
-#line 67 "analizer.y"
-                                                                                                                      { printf("Turno completado\n"); }
-#line 1174 "analizer.tab.c"
-    break;
-
-  case 11: /* turn_structure: TURN PNAME movements shoot PNAME movements shoot PNAME movements shoot PNAME special_attack FINISH_TURN  */
-#line 68 "analizer.y"
-                                                                                                                         { printf("Turno completado\n"); }
-#line 1180 "analizer.tab.c"
-    break;
-
-  case 12: /* turn_structure: TURN PNAME movements shoot PNAME movements shoot PNAME special_attack PNAME special_attack FINISH_TURN  */
-#line 69 "analizer.y"
-                                                                                                                        { printf("Turno completado\n");}
-#line 1186 "analizer.tab.c"
-    break;
-
-  case 13: /* turn_structure: TURN PNAME movements shoot PNAME special_attack PNAME special_attack PNAME special_attack FINISH_TURN  */
-#line 70 "analizer.y"
-                                                                                                                       { printf("Turno completado\n"); }
-#line 1192 "analizer.tab.c"
-    break;
-
-  case 14: /* turn_structure: TURN PNAME movements shoot PNAME special_attack PNAME movements shoot PNAME movements shoot FINISH_TURN  */
-#line 71 "analizer.y"
-                                                                                                                         { printf("Turno completado\n"); }
+  case 10: /* turn: PNAME special_attack  */
+#line 91 "analizer.y"
+                           {   if(strcmp(player_name_check, (yyvsp[-1].str)) == 0){
+                                printf("Personaje repetido\n ");
+                                exit(1); 
+                                }else{
+                                char *player_name_check = (yyvsp[-1].str);
+                                 if(strcmp(player_name_check, player_name[0]) == 0 || 
+                                strcmp(player_name_check, player_name[1]) == 0 || 
+                                strcmp(player_name_check, player_name[2]) == 0 || 
+                                strcmp(player_name_check, player_name[3]) == 0) {
+                                printf("Todo bien\n ");
+                                } else {
+                                printf("Personaje no seleccionado\n ");
+                                exit(1);
+                            }}}
 #line 1198 "analizer.tab.c"
     break;
 
-  case 17: /* movement: FORWARD  */
-#line 78 "analizer.y"
-                   { printf("Avanzar\n"); }
-#line 1204 "analizer.tab.c"
+  case 11: /* turn: PNAME movements shoot  */
+#line 105 "analizer.y"
+                            {   if(strcmp(player_name_check, (yyvsp[-2].str)) == 0){
+                                printf("Personaje repetido\n ");
+                                exit(1); 
+                                }else{
+                                char *player_name_check = (yyvsp[-2].str);
+                                 if(strcmp(player_name_check, player_name[0]) == 0 || 
+                                strcmp(player_name_check, player_name[1]) == 0 || 
+                                strcmp(player_name_check, player_name[2]) == 0 || 
+                                strcmp(player_name_check, player_name[3]) == 0) {
+                                printf("Todo bien\n ");
+                                } else {
+                                printf("Personaje no seleccionado\n ");
+                                exit(1);
+                            }}}
+#line 1217 "analizer.tab.c"
     break;
 
-  case 18: /* movement: REVERSE  */
-#line 79 "analizer.y"
-                   { printf("Retroceder\n"); }
-#line 1210 "analizer.tab.c"
-    break;
-
-  case 19: /* movement: RIGHT  */
-#line 80 "analizer.y"
-                 { printf("Derecha\n"); }
-#line 1216 "analizer.tab.c"
-    break;
-
-  case 20: /* movement: LEFT  */
-#line 81 "analizer.y"
-                { printf("Izquierda\n"); }
-#line 1222 "analizer.tab.c"
-    break;
-
-  case 21: /* movement: TURBO  */
-#line 82 "analizer.y"
-                 { printf("Turbo\n"); }
-#line 1228 "analizer.tab.c"
-    break;
-
-  case 22: /* movement: BRAKE  */
-#line 83 "analizer.y"
-                 { printf("Frenar\n"); }
-#line 1234 "analizer.tab.c"
-    break;
-
-  case 23: /* movement: ACCELERATE  */
-#line 84 "analizer.y"
-                      { printf("Acelerar\n"); }
+  case 12: /* turn: PNAME movements secundary_attacks  */
+#line 119 "analizer.y"
+                                       { 
+                                char *player_name_check = (yyvsp[-2].str);
+                                 if(strcmp(player_name_check, player_name[0]) == 0 || 
+                                strcmp(player_name_check, player_name[1]) == 0 || 
+                                strcmp(player_name_check, player_name[2]) == 0 || 
+                                strcmp(player_name_check, player_name[3]) == 0) {
+                                    if((strcmp(player_name_check, repeat_player_name[0]) == 0 || 
+                                        strcmp(player_name_check, repeat_player_name[1]) == 0 || 
+                                        strcmp(player_name_check, repeat_player_name[2]) == 0 || 
+                                        strcmp(player_name_check, repeat_player_name[3]) == 0)){
+                                        printf("Personaje repetido\n ");
+                                        exit(1); 
+                                     }else{
+                                        strncpy(repeat_player_name[repeat_num_players++], player_name_check, sizeof(repeat_player_name[0]) - 1);
+                                } } else {
+                                printf("Personaje no seleccionado\n ");
+                                exit(1);
+                            }}
 #line 1240 "analizer.tab.c"
     break;
 
-  case 24: /* shoot: MACHINE_GUN  */
-#line 86 "analizer.y"
-                   { printf("Disparar ametralladora\n"); }
+  case 15: /* movement: FORWARD  */
+#line 142 "analizer.y"
+                   { printf("Avanzar "); }
 #line 1246 "analizer.tab.c"
     break;
 
-  case 25: /* special_attack: FIREBALL_FREEZE_ATTACK  */
-#line 88 "analizer.y"
-                                       { printf("Disparar bola de fuego congelante\n"); }
+  case 16: /* movement: REVERSE  */
+#line 143 "analizer.y"
+                   { printf("Retroceder "); }
 #line 1252 "analizer.tab.c"
     break;
 
-  case 26: /* special_attack: BE_INVISIBLE  */
-#line 89 "analizer.y"
-                    { printf("Volverse invisible\n"); }
+  case 17: /* movement: RIGHT  */
+#line 144 "analizer.y"
+                 { printf("Derecha "); }
 #line 1258 "analizer.tab.c"
     break;
 
-  case 27: /* special_attack: CHARGED_UP_MINE  */
-#line 90 "analizer.y"
-                       { printf("Colocar mina cargada\n"); }
+  case 18: /* movement: LEFT  */
+#line 145 "analizer.y"
+                { printf("Izquierda "); }
 #line 1264 "analizer.tab.c"
     break;
 
-  case 28: /* special_attack: FREEZE_ATTACK  */
-#line 91 "analizer.y"
-                     { printf("Ataque congelante\n"); }
+  case 19: /* movement: TURBO  */
+#line 146 "analizer.y"
+                 { printf("Turbo "); }
 #line 1270 "analizer.tab.c"
     break;
 
-  case 29: /* special_attack: ENERGY_SHIELD  */
-#line 92 "analizer.y"
-                     { printf("Activar escudo de energía\n"); }
+  case 20: /* movement: BRAKE  */
+#line 147 "analizer.y"
+                 { printf("Frenar "); }
 #line 1276 "analizer.tab.c"
     break;
 
-  case 30: /* special_attack: MINE  */
-#line 93 "analizer.y"
-            { printf("Colocar mina\n"); }
+  case 21: /* movement: ACCELERATE  */
+#line 148 "analizer.y"
+                      { printf("Acelerar "); }
 #line 1282 "analizer.tab.c"
     break;
 
-  case 31: /* special_attack: FIRE_REAR_WEAPONS  */
-#line 94 "analizer.y"
-                         { printf("Disparar armas traseras\n"); }
+  case 22: /* shoot: MACHINE_GUN  */
+#line 150 "analizer.y"
+                   { printf("Disparar ametralladora\n"); }
 #line 1288 "analizer.tab.c"
     break;
 
-  case 32: /* special_attack: JUMP  */
-#line 95 "analizer.y"
-            { printf("Saltar\n"); }
+  case 23: /* secundary_attacks: FIRE_SELECTED_WEAPON  */
+#line 153 "analizer.y"
+                                         { printf("Disparo secundario\n"); }
 #line 1294 "analizer.tab.c"
     break;
 
+  case 25: /* select_secundary_attack: SECONDARY_WEAPON_1  */
+#line 157 "analizer.y"
+                                            { printf("Cambio arma izq\n"); }
+#line 1300 "analizer.tab.c"
+    break;
 
-#line 1298 "analizer.tab.c"
+  case 26: /* select_secundary_attack: SECONDARY_WEAPON_2  */
+#line 158 "analizer.y"
+                          { printf("Cambio arma der\n"); }
+#line 1306 "analizer.tab.c"
+    break;
+
+  case 27: /* special_attack: FIREBALL_FREEZE_ATTACK  */
+#line 161 "analizer.y"
+                                       { printf("Disparar bola de fuego congelante\n"); }
+#line 1312 "analizer.tab.c"
+    break;
+
+  case 28: /* special_attack: BE_INVISIBLE  */
+#line 162 "analizer.y"
+                    { printf("Volverse invisible\n"); }
+#line 1318 "analizer.tab.c"
+    break;
+
+  case 29: /* special_attack: FREEZE_ATTACK  */
+#line 163 "analizer.y"
+                     { printf("Ataque congelante\n"); }
+#line 1324 "analizer.tab.c"
+    break;
+
+  case 30: /* special_attack: JUMP  */
+#line 164 "analizer.y"
+            { printf("Saltar\n"); }
+#line 1330 "analizer.tab.c"
+    break;
+
+
+#line 1334 "analizer.tab.c"
 
       default: break;
     }
@@ -1487,7 +1523,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 98 "analizer.y"
+#line 167 "analizer.y"
 
 
 int main(int argc, char **argv) {
@@ -1508,9 +1544,12 @@ int main(int argc, char **argv) {
 
     yyparse();
 
-    fclose(archivo);
 
-    return 0;
+    fclose(archivo);
+    printf("Player names:\n");
+    for (int i = 0; i < num_players; i++) {
+        printf("%d: %s\n", i + 1, player_name[i]);
+    }
 }
 
 int yyerror(char *s) {

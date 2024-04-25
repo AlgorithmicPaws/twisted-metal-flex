@@ -44,12 +44,7 @@
 "R2"                                  { return MACHINE_GUN; }
 "L1L2R1R2⇒⇐⇑"                         { return FIREBALL_FREEZE_ATTACK; }
 "⇐⇐⇓⇓"                                { return BE_INVISIBLE; }
-"⇒⇐⇓⇓"                                { return CHARGED_UP_MINE; }
-"⇑⇓⇑"                                 { return FREEZE; }
 "⇒⇐⇑"                                 { return FREEZE_ATTACK; }
-"⇒⇒⇓⇓"                                { return ENERGY_SHIELD; }
-"⇒⇐⇓"                                 { return MINE; }
-"⇐⇒⇓L2"                               { return FIRE_REAR_WEAPONS; }
 "⇑⇐⇐"                                 { return JUMP; }
 
 

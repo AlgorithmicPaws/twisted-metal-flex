@@ -7,8 +7,12 @@ int yylex(void);
 int yyerror(char* s);
 extern char *yytext; 
 char player_name[4][20];
-char player_name_a[1][20];
+char repeat_player_name[4][20];
 int num_players = 0;
+int repeat_num_players = 0;
+char map_name[20];
+int map_selected = 0;
+char player_name_check[20];
 %}
 %union {
     char *str;
@@ -54,7 +58,15 @@ selections : selection
            | selections selection
            ;
 
-selection : SELECT MAP MAPNAME { printf("Mapa seleccionado\n"); }
+selection : SELECT MAP MAPNAME { 
+                if (map_selected) {
+                    printf("Error: Solo se puede seleccionar un mapa.\n");
+                    exit(1);
+                }
+                printf("Mapa seleccionado: %s\n", yytext); 
+                strncpy(map_name, yytext, sizeof(map_name) - 1);
+                map_selected = 1; 
+            }
           | SELECT PLAYER PNAME { 
                 printf("Personaje seleccionado\n"); 
                 if (num_players < 4) {
@@ -65,23 +77,65 @@ selection : SELECT MAP MAPNAME { printf("Mapa seleccionado\n"); }
                 }
               }
           ;
-turn_structures : /* Empty */
+turn_structures : turn_structure 
                 | turn_structure turn_structures
                 ;
 
-turn_structure : TURN PNAME special_attack PNAME special_attack PNAME special_attack PNAME special_attack FINISH_TURN { printf("Turno completado\n"); }
-                |TURN PNAME special_attack PNAME movements shoot PNAME movements shoot PNAME movements shoot FINISH_TURN {printf("First player name: %s\n", $2);
-                printf("Second player name: %s\n", $4);
-                printf("Third player name: %s\n", $7);
-                printf("Fourth player name: %s\n", $10);}
-                |TURN PNAME movements shoot PNAME movements shoot PNAME movements shoot PNAME special_attack FINISH_TURN { printf("Turno completado\n"); }
-                |TURN PNAME movements shoot PNAME movements shoot PNAME special_attack PNAME special_attack FINISH_TURN { printf("Turno completado\n");}
-                |TURN PNAME movements shoot PNAME special_attack PNAME special_attack PNAME special_attack FINISH_TURN { printf("Turno completado\n"); }
-                |TURN PNAME movements shoot PNAME special_attack PNAME movements shoot PNAME movements shoot FINISH_TURN { printf("Turno completado\n"); }
-                |TURN PNAME movements shoot PNAME movements shoot PNAME movements shoot PNAME movements shoot FINISH_TURN { printf("Turno completado\n"); }
-                ;
+turn_structure : TURN turn turn turn turn FINISH_TURN {repeat_num_players = 0;
+    for (int i = 0; i < 4; i++) {
+        memset(repeat_player_name[i], 0, sizeof(repeat_player_name[i])); // Fill each element with null bytes
+    }
+    }
+               ;
 
-movements : /* Empty */
+turn: PNAME special_attack {   if(strcmp(player_name_check, $1) == 0){
+                                printf("Personaje repetido\n ");
+                                exit(1); 
+                                }else{
+                                char *player_name_check = $1;
+                                 if(strcmp(player_name_check, player_name[0]) == 0 || 
+                                strcmp(player_name_check, player_name[1]) == 0 || 
+                                strcmp(player_name_check, player_name[2]) == 0 || 
+                                strcmp(player_name_check, player_name[3]) == 0) {
+                                printf("Todo bien\n ");
+                                } else {
+                                printf("Personaje no seleccionado\n ");
+                                exit(1);
+                            }}}
+    | PNAME movements shoot {   if(strcmp(player_name_check, $1) == 0){
+                                printf("Personaje repetido\n ");
+                                exit(1); 
+                                }else{
+                                char *player_name_check = $1;
+                                 if(strcmp(player_name_check, player_name[0]) == 0 || 
+                                strcmp(player_name_check, player_name[1]) == 0 || 
+                                strcmp(player_name_check, player_name[2]) == 0 || 
+                                strcmp(player_name_check, player_name[3]) == 0) {
+                                printf("Todo bien\n ");
+                                } else {
+                                printf("Personaje no seleccionado\n ");
+                                exit(1);
+                            }}}
+    | PNAME movements secundary_attacks{ 
+                                char *player_name_check = $1;
+                                 if(strcmp(player_name_check, player_name[0]) == 0 || 
+                                strcmp(player_name_check, player_name[1]) == 0 || 
+                                strcmp(player_name_check, player_name[2]) == 0 || 
+                                strcmp(player_name_check, player_name[3]) == 0) {
+                                    if((strcmp(player_name_check, repeat_player_name[0]) == 0 || 
+                                        strcmp(player_name_check, repeat_player_name[1]) == 0 || 
+                                        strcmp(player_name_check, repeat_player_name[2]) == 0 || 
+                                        strcmp(player_name_check, repeat_player_name[3]) == 0)){
+                                        printf("Personaje repetido\n ");
+                                        exit(1); 
+                                     }else{
+                                        strncpy(repeat_player_name[repeat_num_players++], player_name_check, sizeof(repeat_player_name[0]) - 1);
+                                } } else {
+                                printf("Personaje no seleccionado\n ");
+                                exit(1);
+                            }}
+
+movements : movement
           | movements movement
           ;
 
@@ -95,13 +149,18 @@ movement : FORWARD { printf("Avanzar "); }
 
 shoot: MACHINE_GUN { printf("Disparar ametralladora\n"); }
      ;
+
+secundary_attacks : FIRE_SELECTED_WEAPON { printf("Disparo secundario\n"); }
+                  | select_secundary_attack secundary_attacks 
+                  ; 
+
+select_secundary_attack: SECONDARY_WEAPON_1 { printf("Cambio arma izq\n"); }
+     | SECONDARY_WEAPON_2 { printf("Cambio arma der\n"); }
+     ;
+
 special_attack: FIREBALL_FREEZE_ATTACK { printf("Disparar bola de fuego congelante\n"); }
      | BE_INVISIBLE { printf("Volverse invisible\n"); }
-     | CHARGED_UP_MINE { printf("Colocar mina cargada\n"); }
      | FREEZE_ATTACK { printf("Ataque congelante\n"); }
-     | ENERGY_SHIELD { printf("Activar escudo de energía\n"); }
-     | MINE { printf("Colocar mina\n"); }
-     | FIRE_REAR_WEAPONS { printf("Disparar armas traseras\n"); }
      | JUMP { printf("Saltar\n"); }
      ;
 
