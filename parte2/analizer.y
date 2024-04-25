@@ -13,6 +13,11 @@ int repeat_num_players = 0;
 char map_name[20];
 int map_selected = 0;
 char player_name_check[20];
+int vida1 = 0;
+int vida2 = 0;
+int vida3 = 0;
+int vida4 = 0;
+
 %}
 %union {
     char *str;
