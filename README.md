@@ -32,8 +32,8 @@ seleccionando el escenario, luego seleccionando 4 jugadores, entonces inicia el 
    Es importante cambiar `example.txt` por el nombre del archivo con el cual se correra el programa.
     ```bash
 	flex analizer.l
-   	 bison -d analizer.y
-	gcc -o analizer analizer.tab.c lex.yy.c -lfl
+   	bison -d analizer.y
+	gcc lex.yy.c analizer.tab.c -o analizer -lfl -lm
     	./analizer example.tx
 2. **Selección de Mapa y Personajes**:
 	En el documento de juego, los jugadores deben seleccionar un mapa y cuatro personajes para el combate. Esto se realiza mediante comandos específicos en el documento.

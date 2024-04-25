@@ -1,6 +1,8 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
+#include <stdbool.h>
 #include <string.h> 
 #define MAP_SIZE 10
 extern FILE *yyin; 
@@ -12,11 +14,15 @@ char repeat_player_name[4][20];
 int num_players = 0;
 int repeat_num_players = 0;
 char map_name[20];
+int oponente_x = 0;
+int oponente_y = 0;
+int oponente_index = 0;
 int map_selected = 0;
 char player_name_check[20];
 int map[MAP_SIZE][MAP_SIZE]= {0};
 int vidas[4]= {10,10,10,10};
 int direccion[4]= {0,90,180,270};
+int damage = 0;
 typedef struct {
     int x;
     int y;
@@ -103,6 +109,47 @@ void cambiar_direccion(int* jugador_direccion, int nueva_direccion) {
         *jugador_direccion = 180; // Apuntar hacia abajo
     }
 }
+double calcular_angulo(int jugador_x, int jugador_y, int oponente_x, int oponente_y) {
+    double dx = oponente_x - jugador_x;
+    double dy = oponente_y - jugador_y;
+    return atan2(dy, dx);
+}
+bool dentro_del_cono(int jugador_x, int jugador_y, int jugador_direccion, int oponente_x, int oponente_y ) {
+    double angulo = calcular_angulo(jugador_x, jugador_y, oponente_x, oponente_y) * 180 / M_PI;
+    double angulo_grados = fmod(angulo, 360);
+
+    int angulo_limite_izq = (jugador_direccion - 45 + 360) % 360;
+    int angulo_limite_der = (jugador_direccion + 45) % 360;
+
+    if (angulo_limite_izq < angulo_limite_der) {
+        return (angulo_limite_izq <= angulo_grados && angulo_grados <= angulo_limite_der);
+    } else {
+        return (angulo_grados >= angulo_limite_izq || angulo_grados <= angulo_limite_der);
+    }
+}
+
+char* disparar(int mapa[MAP_SIZE][MAP_SIZE], int jugador_x, int jugador_y, int jugador_direccion, int oponente_x, int oponente_y, int* vida_oponente, int damage) {
+    // Check if the opponent is at the same position as the player
+    if (jugador_x == oponente_x && jugador_y == oponente_y) {
+        printf("Impacto seguro"); // If the opponent is in the same position as the player
+    }
+
+    // Check if the opponent is within the player's cone of vision
+    if (dentro_del_cono(jugador_x, jugador_y, jugador_direccion, oponente_x, oponente_y)) {
+        // If the opponent is within the cone of vision, calculate whether the shot hits
+        // Impact with 50% probability
+        if (rand() % 2 == 0) {
+            // Apply damage to the opponent's health
+            *vida_oponente -= damage; // Adjust the damage value as needed
+            printf("Impacto");
+        } else {
+            printf( "Fallaste"); // Shot missed
+        }
+    }
+
+    printf( "Fuera de vision"); // The opponent is out of the player's cone of vision
+}
+
 %}
 %union {
     char *str;
@@ -173,13 +220,13 @@ turn_structure : TURN turn turn turn turn FINISH_TURN {repeat_num_players = 0;
     num_player_playing = 0;
     for (int i = 0; i < 4; i++) {
         memset(repeat_player_name[i], 0, sizeof(repeat_player_name[i])); // Fill each element with null bytes
-    }
+    };
     }
     ;
 
-turn: PNAME special_attack { check_player_name($1);num_player_playing++;} 
-    | PNAME movements shoot { check_player_name($1);num_player_playing++;} 
-    | PNAME movements secundary_attacks{ check_player_name($1);num_player_playing++;} 
+turn: PNAME special_attack { check_player_name($1); printf("Vida: %d\n", vidas[num_player_playing]);num_player_playing++;} 
+    | PNAME movements shoot { check_player_name($1);printf("Vida: %d\n", vidas[num_player_playing]);num_player_playing++;} 
+    | PNAME movements secundary_attacks{ check_player_name($1);printf("Vida: %d\n", vidas[num_player_playing]);num_player_playing++;} 
 
 movements : movement
           | movements movement
@@ -193,7 +240,8 @@ movement : FORWARD {move_forward(num_player_playing); }
          | BRAKE { printf("Frenar "); }
          | ACCELERATE { move_forward(num_player_playing); }
 
-shoot: MACHINE_GUN { printf("Disparar ametralladora\n"); }
+shoot: MACHINE_GUN {damage = 2;disparar(map, posiciones[num_player_playing]->x, posiciones[num_player_playing]->y, direccion[num_player_playing], oponente_x, oponente_y, &vidas[oponente_index], damage );
+ }
      ;
 
 secundary_attacks : FIRE_SELECTED_WEAPON { printf("Disparo secundario\n"); }

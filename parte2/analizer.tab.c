@@ -71,6 +71,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
+#include <stdbool.h>
 #include <string.h> 
 #define MAP_SIZE 10
 extern FILE *yyin; 
@@ -82,11 +84,15 @@ char repeat_player_name[4][20];
 int num_players = 0;
 int repeat_num_players = 0;
 char map_name[20];
+int oponente_x = 0;
+int oponente_y = 0;
+int oponente_index = 0;
 int map_selected = 0;
 char player_name_check[20];
 int map[MAP_SIZE][MAP_SIZE]= {0};
 int vidas[4]= {10,10,10,10};
 int direccion[4]= {0,90,180,270};
+int damage = 0;
 typedef struct {
     int x;
     int y;
@@ -173,8 +179,49 @@ void cambiar_direccion(int* jugador_direccion, int nueva_direccion) {
         *jugador_direccion = 180; // Apuntar hacia abajo
     }
 }
+double calcular_angulo(int jugador_x, int jugador_y, int oponente_x, int oponente_y) {
+    double dx = oponente_x - jugador_x;
+    double dy = oponente_y - jugador_y;
+    return atan2(dy, dx);
+}
+bool dentro_del_cono(int jugador_x, int jugador_y, int jugador_direccion, int oponente_x, int oponente_y ) {
+    double angulo = calcular_angulo(jugador_x, jugador_y, oponente_x, oponente_y) * 180 / M_PI;
+    double angulo_grados = fmod(angulo, 360);
 
-#line 178 "analizer.tab.c"
+    int angulo_limite_izq = (jugador_direccion - 45 + 360) % 360;
+    int angulo_limite_der = (jugador_direccion + 45) % 360;
+
+    if (angulo_limite_izq < angulo_limite_der) {
+        return (angulo_limite_izq <= angulo_grados && angulo_grados <= angulo_limite_der);
+    } else {
+        return (angulo_grados >= angulo_limite_izq || angulo_grados <= angulo_limite_der);
+    }
+}
+
+char* disparar(int mapa[MAP_SIZE][MAP_SIZE], int jugador_x, int jugador_y, int jugador_direccion, int oponente_x, int oponente_y, int* vida_oponente, int damage) {
+    // Check if the opponent is at the same position as the player
+    if (jugador_x == oponente_x && jugador_y == oponente_y) {
+        printf("Impacto seguro"); // If the opponent is in the same position as the player
+    }
+
+    // Check if the opponent is within the player's cone of vision
+    if (dentro_del_cono(jugador_x, jugador_y, jugador_direccion, oponente_x, oponente_y)) {
+        // If the opponent is within the cone of vision, calculate whether the shot hits
+        // Impact with 50% probability
+        if (rand() % 2 == 0) {
+            // Apply damage to the opponent's health
+            *vida_oponente -= damage; // Adjust the damage value as needed
+            printf("Impacto");
+        } else {
+            printf( "Fallaste"); // Shot missed
+        }
+    }
+
+    printf( "Fuera de vision"); // The opponent is out of the player's cone of vision
+}
+
+
+#line 225 "analizer.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -633,12 +680,12 @@ static const yytype_int8 yytranslate[] =
 
 #if YYDEBUG
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
-static const yytype_uint8 yyrline[] =
+static const yytype_int16 yyrline[] =
 {
-       0,   141,   141,   145,   146,   149,   158,   168,   169,   172,
-     180,   181,   182,   184,   185,   188,   189,   190,   191,   192,
-     193,   194,   196,   199,   200,   203,   204,   207,   208,   209,
-     210
+       0,   188,   188,   192,   193,   196,   205,   215,   216,   219,
+     227,   228,   229,   231,   232,   235,   236,   237,   238,   239,
+     240,   241,   243,   247,   248,   251,   252,   255,   256,   257,
+     258
 };
 #endif
 
@@ -1231,7 +1278,7 @@ yyreduce:
   switch (yyn)
     {
   case 5: /* selection: SELECT MAP MAPNAME  */
-#line 149 "analizer.y"
+#line 196 "analizer.y"
                                { 
                 if (map_selected) {
                     printf("Error: Solo se puede seleccionar un mapa.\n");
@@ -1241,11 +1288,11 @@ yyreduce:
                 strncpy(map_name, yytext, sizeof(map_name) - 1);
                 map_selected = 1; 
             }
-#line 1245 "analizer.tab.c"
+#line 1292 "analizer.tab.c"
     break;
 
   case 6: /* selection: SELECT PLAYER PNAME  */
-#line 158 "analizer.y"
+#line 205 "analizer.y"
                                 { 
                 printf("Personaje seleccionado\n"); 
                 if (num_players < 4) {
@@ -1255,130 +1302,131 @@ yyreduce:
                     exit(1); 
                 }
               }
-#line 1259 "analizer.tab.c"
+#line 1306 "analizer.tab.c"
     break;
 
   case 9: /* turn_structure: TURN turn turn turn turn FINISH_TURN  */
-#line 172 "analizer.y"
+#line 219 "analizer.y"
                                                       {repeat_num_players = 0;
     num_player_playing = 0;
     for (int i = 0; i < 4; i++) {
         memset(repeat_player_name[i], 0, sizeof(repeat_player_name[i])); // Fill each element with null bytes
+    };
     }
-    }
-#line 1270 "analizer.tab.c"
+#line 1317 "analizer.tab.c"
     break;
 
   case 10: /* turn: PNAME special_attack  */
-#line 180 "analizer.y"
-                           { check_player_name((yyvsp[-1].str));num_player_playing++;}
-#line 1276 "analizer.tab.c"
+#line 227 "analizer.y"
+                           { check_player_name((yyvsp[-1].str)); printf("Vida: %d\n", vidas[num_player_playing]);num_player_playing++;}
+#line 1323 "analizer.tab.c"
     break;
 
   case 11: /* turn: PNAME movements shoot  */
-#line 181 "analizer.y"
-                            { check_player_name((yyvsp[-2].str));num_player_playing++;}
-#line 1282 "analizer.tab.c"
+#line 228 "analizer.y"
+                            { check_player_name((yyvsp[-2].str));printf("Vida: %d\n", vidas[num_player_playing]);num_player_playing++;}
+#line 1329 "analizer.tab.c"
     break;
 
   case 12: /* turn: PNAME movements secundary_attacks  */
-#line 182 "analizer.y"
-                                       { check_player_name((yyvsp[-2].str));num_player_playing++;}
-#line 1288 "analizer.tab.c"
+#line 229 "analizer.y"
+                                       { check_player_name((yyvsp[-2].str));printf("Vida: %d\n", vidas[num_player_playing]);num_player_playing++;}
+#line 1335 "analizer.tab.c"
     break;
 
   case 15: /* movement: FORWARD  */
-#line 188 "analizer.y"
+#line 235 "analizer.y"
                    {move_forward(num_player_playing); }
-#line 1294 "analizer.tab.c"
+#line 1341 "analizer.tab.c"
     break;
 
   case 16: /* movement: REVERSE  */
-#line 189 "analizer.y"
+#line 236 "analizer.y"
                    {move_backward(num_player_playing); }
-#line 1300 "analizer.tab.c"
+#line 1347 "analizer.tab.c"
     break;
 
   case 17: /* movement: RIGHT  */
-#line 190 "analizer.y"
+#line 237 "analizer.y"
                  {cambiar_direccion(&direccion[num_player_playing], 90);}
-#line 1306 "analizer.tab.c"
+#line 1353 "analizer.tab.c"
     break;
 
   case 18: /* movement: LEFT  */
-#line 191 "analizer.y"
+#line 238 "analizer.y"
                 {cambiar_direccion(&direccion[num_player_playing], 270);}
-#line 1312 "analizer.tab.c"
+#line 1359 "analizer.tab.c"
     break;
 
   case 19: /* movement: TURBO  */
-#line 192 "analizer.y"
+#line 239 "analizer.y"
                  {move_forward(num_player_playing);}
-#line 1318 "analizer.tab.c"
+#line 1365 "analizer.tab.c"
     break;
 
   case 20: /* movement: BRAKE  */
-#line 193 "analizer.y"
+#line 240 "analizer.y"
                  { printf("Frenar "); }
-#line 1324 "analizer.tab.c"
+#line 1371 "analizer.tab.c"
     break;
 
   case 21: /* movement: ACCELERATE  */
-#line 194 "analizer.y"
+#line 241 "analizer.y"
                       { move_forward(num_player_playing); }
-#line 1330 "analizer.tab.c"
+#line 1377 "analizer.tab.c"
     break;
 
   case 22: /* shoot: MACHINE_GUN  */
-#line 196 "analizer.y"
-                   { printf("Disparar ametralladora\n"); }
-#line 1336 "analizer.tab.c"
+#line 243 "analizer.y"
+                   {damage = 2;disparar(map, posiciones[num_player_playing]->x, posiciones[num_player_playing]->y, direccion[num_player_playing], oponente_x, oponente_y, &vidas[oponente_index], damage );
+ }
+#line 1384 "analizer.tab.c"
     break;
 
   case 23: /* secundary_attacks: FIRE_SELECTED_WEAPON  */
-#line 199 "analizer.y"
+#line 247 "analizer.y"
                                          { printf("Disparo secundario\n"); }
-#line 1342 "analizer.tab.c"
+#line 1390 "analizer.tab.c"
     break;
 
   case 25: /* select_secundary_attack: SECONDARY_WEAPON_1  */
-#line 203 "analizer.y"
+#line 251 "analizer.y"
                                             { printf("Cambio arma izq\n"); }
-#line 1348 "analizer.tab.c"
+#line 1396 "analizer.tab.c"
     break;
 
   case 26: /* select_secundary_attack: SECONDARY_WEAPON_2  */
-#line 204 "analizer.y"
+#line 252 "analizer.y"
                           { printf("Cambio arma der\n"); }
-#line 1354 "analizer.tab.c"
+#line 1402 "analizer.tab.c"
     break;
 
   case 27: /* special_attack: FIREBALL_FREEZE_ATTACK  */
-#line 207 "analizer.y"
+#line 255 "analizer.y"
                                        { printf("Disparar bola de fuego congelante\n"); }
-#line 1360 "analizer.tab.c"
+#line 1408 "analizer.tab.c"
     break;
 
   case 28: /* special_attack: BE_INVISIBLE  */
-#line 208 "analizer.y"
+#line 256 "analizer.y"
                     { printf("Volverse invisible\n"); }
-#line 1366 "analizer.tab.c"
+#line 1414 "analizer.tab.c"
     break;
 
   case 29: /* special_attack: FREEZE_ATTACK  */
-#line 209 "analizer.y"
+#line 257 "analizer.y"
                      { printf("Ataque congelante\n"); }
-#line 1372 "analizer.tab.c"
+#line 1420 "analizer.tab.c"
     break;
 
   case 30: /* special_attack: JUMP  */
-#line 210 "analizer.y"
+#line 258 "analizer.y"
             { printf("Saltar\n"); }
-#line 1378 "analizer.tab.c"
+#line 1426 "analizer.tab.c"
     break;
 
 
-#line 1382 "analizer.tab.c"
+#line 1430 "analizer.tab.c"
 
       default: break;
     }
@@ -1571,7 +1619,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 213 "analizer.y"
+#line 261 "analizer.y"
 
 
 int main(int argc, char **argv) {
